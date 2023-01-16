@@ -21,7 +21,7 @@ pipeline {
                     BUILD_IMAGE = docker.build(BUILD_IMAGE_NAME, '-f Dockerfile.test .')
                     // Run unit tests with vitest
                     BUILD_IMAGE.inside {
-                        sh 'npm run test:unit:ci'
+                        sh 'cd /usr/src/app && npm run test:unit:ci'
                     }
                 }
             }
@@ -32,7 +32,7 @@ pipeline {
                 script {
                     // Run playwright tests
                     BUILD_IMAGE.inside {
-                        sh 'npm run test'
+                        sh 'cd /usr/src/app && npm run test'
                     }
                 }
             }
@@ -72,19 +72,23 @@ pipeline {
                 expression { env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
+
+                script {
                     if (env.BRANCH_NAME == 'main') {
-                    echo 'Deploy Production environment '
-                    sh 'docker compose -f ./.cicd/docker/docker-compose-prod.yml down'
-                    sh 'docker compose -f ./.cicd/docker/docker-compose-prod.yml up -d'
+                        echo 'Deploy Production environment '
+                        sh 'docker compose -f ./.cicd/docker/docker-compose-prod.yml down'
+                        sh 'docker compose -f ./.cicd/docker/docker-compose-prod.yml up -d'
                     }  else if (env.BRANCH_NAME == 'release') {
-                    echo 'Deploy stage environment '
-                    sh 'docker compose -f ./.cicd/docker/docker-compose-stage.yml down'
-                    sh 'docker compose -f ./.cicd/docker/docker-compose-stage.yml up -d'
+                        echo 'Deploy stage environment '
+                        sh 'docker compose -f ./.cicd/docker/docker-compose-stage.yml down'
+                        sh 'docker compose -f ./.cicd/docker/docker-compose-stage.yml up -d'
                     } else {
-                    echo 'Deploy dev environment '
-                    sh 'docker compose -f ./.cicd/docker/docker-compose-dev.yml down'
-                    sh 'docker compose -f ./.cicd/docker/docker-compose-dev.yml up -d'
+                        echo 'Deploy dev environment '
+                        sh 'docker compose -f ./.cicd/docker/docker-compose-dev.yml down'
+                        sh 'docker compose -f ./.cicd/docker/docker-compose-dev.yml up -d'
                     }
+                }
+
             }
         }
     }
@@ -98,7 +102,7 @@ pipeline {
                     // remove build images
                     sh "docker rmi $IMAGE_NAME:$TAG 2> /dev/null"
                     sh "docker rmi $REGISTRY_DOMAIN/$IMAGE_NAME:$TAG 2> /dev/null"
-                    sh "docker rmi $REGISTRY_DOMAIN/$IMAGE_NAME:latest 2> /dev/null"
+                    // sh "docker rmi $REGISTRY_DOMAIN/$IMAGE_NAME:latest 2> /dev/null"
                 }
             }
             sh 'docker image prune -f'
