@@ -1,0 +1,3 @@
+FROM mcr.microsoft.com/playwright:v1.29.2-focal
+COPY . /usr/src/app
+WORKDIR /usr/src/app

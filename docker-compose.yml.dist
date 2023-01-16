@@ -1,0 +1,21 @@
+version: '3.8'
+networks:
+  web:
+    name: web
+    external: true
+
+services:
+  web-thetiptop:
+    build:
+      context: .
+    # ports:
+    #   - 3002:3000
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.web-thetiptop.rule=Host(`web.domain.local`)
+      - traefik.http.routers.web-thetiptop.entrypoints=secure
+      - traefik.http.routers.web-thetiptop.tls=true
+      - traefik.http.services.web-thetiptop.loadbalancer.server.port=3000
+    networks:
+      - web

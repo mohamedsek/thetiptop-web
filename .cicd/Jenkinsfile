@@ -1,0 +1,132 @@
+pipeline {
+    agent any
+
+    environment {
+        PROJECT_NAME = 'thetiptop-web'
+        DATE = new Date().format('yy.M')
+        TAG = "${DATE}.${BUILD_NUMBER}"
+        REGISTRY_DOMAIN = 'registry.dsp-archiwebf22-at-sb-ms.fr'
+        REGISTRY_URL = "https://${REGISTRY_DOMAIN}"
+        registryCredential = 'registry-credentials'
+        IMAGE_NAME = "pfe/${PROJECT_NAME}-${env.BRANCH_NAME}".toLowerCase()
+        APP_IMAGE = ''
+        BUILD_IMAGE_NAME = "tmp/${PROJECT_NAME}-${env.BRANCH_NAME}".toLowerCase()
+        BUILD_IMAGE = ''
+    }
+    stages {
+        stage('Unit Tests') {
+            steps {
+                script {
+                    // prepare execution image
+                    BUILD_IMAGE = docker.build(BUILD_IMAGE_NAME, '-f Dockerfile.test .')
+                    // Run unit tests with vitest
+                    BUILD_IMAGE.inside {
+                        sh 'npm run test:unit:ci'
+                    }
+                }
+            }
+        }
+
+        stage('E2E Tests') {
+            steps {
+                script {
+                    // Run playwright tests
+                    BUILD_IMAGE.inside {
+                        sh 'npm run test'
+                    }
+                }
+            }
+        }
+
+        stage('Qality control') {
+            steps {
+                echo 'Qality control ...'
+            }
+        }
+
+        stage('Build image') {
+            when {
+                expression { env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+            }
+            steps {
+                script {
+                    APP_IMAGE = docker.build "$IMAGE_NAME:$TAG"
+                }
+            }
+        }
+        stage('Push Image') {
+            when {
+                expression { env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+            }
+            steps {
+                script {
+                    docker.withRegistry(REGISTRY_URL, registryCredential) {
+                        APP_IMAGE.push("$TAG")
+                        APP_IMAGE.push('latest')
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            when {
+                expression { env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+            }
+            steps {
+                    if (env.BRANCH_NAME == 'main') {
+                    echo 'Deploy Production environment '
+                    sh 'docker compose -f ./.cicd/docker/docker-compose-prod.yml down'
+                    sh 'docker compose -f ./.cicd/docker/docker-compose-prod.yml up -d'
+                    }  else if (env.BRANCH_NAME == 'release') {
+                    echo 'Deploy stage environment '
+                    sh 'docker compose -f ./.cicd/docker/docker-compose-stage.yml down'
+                    sh 'docker compose -f ./.cicd/docker/docker-compose-stage.yml up -d'
+                    } else {
+                    echo 'Deploy dev environment '
+                    sh 'docker compose -f ./.cicd/docker/docker-compose-dev.yml down'
+                    sh 'docker compose -f ./.cicd/docker/docker-compose-dev.yml up -d'
+                    }
+            }
+        }
+    }
+    post {
+        always {
+            echo 'This will always run'
+            // remove tmp image
+            sh "docker rmi $BUILD_IMAGE_NAME:latest 2> /dev/null"
+            script {
+                if (env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release') {
+                    // remove build images
+                    sh "docker rmi $IMAGE_NAME:$TAG 2> /dev/null"
+                    sh "docker rmi $REGISTRY_DOMAIN/$IMAGE_NAME:$TAG 2> /dev/null"
+                    sh "docker rmi $REGISTRY_DOMAIN/$IMAGE_NAME:latest 2> /dev/null"
+                }
+            }
+            sh 'docker image prune -f'
+            //https://issues.jenkins.io/browse/JENKINS-41805
+            cleanWs()
+            dir("${env.WORKSPACE}@tmp") {
+                deleteDir()
+            }
+            dir("${env.WORKSPACE}@script") {
+                deleteDir()
+            }
+            dir("${env.WORKSPACE}@script@tmp") {
+                deleteDir()
+            }
+        }
+
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+        unstable {
+            echo 'This will run only if the run was marked as unstable'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
+}

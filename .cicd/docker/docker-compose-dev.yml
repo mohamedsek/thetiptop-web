@@ -1,0 +1,18 @@
+version: '3.8'
+networks:
+  web:
+    name: web
+    external: true
+
+services:
+  web-thetiptop-dev:
+    image: registry.dsp-archiwebf22-at-sb-ms.fr/pfe/thetiptop-web-develop:latest
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.web-thetiptop.rule=Host(`web.dev.dsp-archiwebf22-at-sb-ms.fr`)
+      - traefik.http.routers.web-thetiptop.entrypoints=secure
+      - traefik.http.routers.web-thetiptop.tls=true
+      - traefik.http.services.web-thetiptop.loadbalancer.server.port=3000
+    networks:
+      - web
