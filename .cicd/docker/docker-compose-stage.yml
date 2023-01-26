@@ -6,7 +6,7 @@ networks:
 
 services:
   web-thetiptop-stage:
-    image: registry.dsp-archiwebf22-at-sb-ms.fr/pfe/thetiptop-web-main:latest
+    image: registry.dsp-archiwebf22-at-sb-ms.fr/pfe/thetiptop-web-release:latest
     restart: unless-stopped
     labels:
       - traefik.enable=true
