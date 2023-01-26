@@ -2,6 +2,7 @@
 	import Counter from './Counter.svelte';
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
+	import { Button } from 'sveltestrap';
 </script>
 
 <svelte:head>
@@ -17,7 +18,7 @@
 				<img src={welcome_fallback} alt="Welcome" />
 			</picture>
 		</span>
-
+		<p><Button>Bootstrap Button</Button></p>
 		to your new<br />SvelteKit app
 	</h1>
 

@@ -2,7 +2,10 @@
 	import { page } from '$app/stores';
 	import logo from '$lib/images/svelte-logo.svg';
 	import github from '$lib/images/github.svg';
+	import { Styles } from 'sveltestrap';
 </script>
+
+<Styles />
 
 <header>
 	<div class="corner">
