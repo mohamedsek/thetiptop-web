@@ -51,14 +51,11 @@ pipeline {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'main') {
-                            APP_IMAGE = docker.build("$IMAGE_NAME:$TAG", "--build-arg BUILD_TARGET=dev  ."
-
+                        APP_IMAGE = docker.build("$IMAGE_NAME:$TAG", '--build-arg BUILD_TARGET=dev  .')
                     }  else if (env.BRANCH_NAME == 'release') {
-                            APP_IMAGE = docker.build("$IMAGE_NAME:$TAG", "--build-arg BUILD_TARGET=stage  ."
-
+                        APP_IMAGE = docker.build("$IMAGE_NAME:$TAG", '--build-arg BUILD_TARGET=stage  .')
                     } else {
-                            APP_IMAGE = docker.build("$IMAGE_NAME:$TAG", "--build-arg BUILD_TARGET=prod  ."
-
+                        APP_IMAGE = docker.build("$IMAGE_NAME:$TAG", '--build-arg BUILD_TARGET=prod  .')
                     }
                 }
             }
