@@ -4,24 +4,6 @@
 </script>
 
 
-<!-- <Navbar color="light" light expand="md">
-	<NavbarBrand href="#">
-		<img src="logo.png" alt="Logo" />
-	</NavbarBrand>
-	<Nav class="ml-auto" navbar>
-		<NavItem>
-			<NavLink href="#">
-				<Button color="primary">Sign Up</Button>
-			</NavLink>
-		</NavItem>
-		<NavItem>
-			<NavLink href="#">
-				<Button color="success">Sign In</Button>
-			</NavLink>
-		</NavItem>
-	</Nav>
-</Navbar> -->
-
 <div class="container">
 	<header
 		class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
@@ -30,7 +12,8 @@
 			href="/"
 			class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
 		>
-			<img src="logo.png" alt="Logo" />
+			<p>Logo</p>
+			<!-- <img src="logo.png" alt="Logo" /> -->
 		</a>
 
 		<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">

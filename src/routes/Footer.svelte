@@ -8,16 +8,16 @@
 		Copyright © 2023 (PFE institut-f2i). Tous les droits sont réservés.
 	</div>
 	<div class="d-flex">
-		<a href="#!" class="me-4 text-white">
+		<a href="#" class="me-4 text-white">
 			<i class="fab fa-facebook-f" />
 		</a>
-		<a href="#!" class="me-4 text-white">
+		<a href="#" class="me-4 text-white">
 			<i class="fab fa-twitter" />
 		</a>
-		<a href="#!" class="me-4 text-white">
+		<a href="#" class="me-4 text-white">
 			<i class="fab fa-google" />
 		</a>
-		<a href="#!" class="text-white">
+		<a href="#" class="text-white">
 			<i class="fab fa-linkedin-in" />
 		</a>
 	</div>
