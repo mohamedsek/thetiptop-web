@@ -1,10 +1,14 @@
+# default Value
+ARG BUILD_TARGET=prod 
+
+
 FROM node:18.13.0 as builder
 
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-RUN npm run build
+RUN npm run build -- --mode ${BUILD_TARGET}
 
 FROM node:18.13.0-alpine
 
