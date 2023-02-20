@@ -44,19 +44,34 @@ pipeline {
             }
         }
 
+        stage('Deploy Approval') {
+            when {
+                branch 'main'
+            }
+            steps {
+                input message: 'Proceed with build and deployment?', submitterParameter: 'PROD_DEPLOYMENT_APPROVED'
+            }
+        }
+
         stage('Build image') {
             when {
-                expression { env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { ( env.PROD_DEPLOYMENT_APPROVED && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
-                    APP_IMAGE = docker.build "$IMAGE_NAME:$TAG"
+                    if (env.BRANCH_NAME == 'main') {
+                        APP_IMAGE = docker.build("$IMAGE_NAME:$TAG", '--build-arg BUILD_TARGET=prod  .')
+                    }  else if (env.BRANCH_NAME == 'release') {
+                        APP_IMAGE = docker.build("$IMAGE_NAME:$TAG", '--build-arg BUILD_TARGET=stage  .')
+                    } else {
+                        APP_IMAGE = docker.build("$IMAGE_NAME:$TAG", '--build-arg BUILD_TARGET=dev  .')
+                    }
                 }
             }
         }
         stage('Push Image') {
             when {
-                expression { env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { ( env.PROD_DEPLOYMENT_APPROVED && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -69,10 +84,9 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                expression { env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { ( env.PROD_DEPLOYMENT_APPROVED && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
-
                 script {
                     if (env.BRANCH_NAME == 'main') {
                         echo 'Deploy Production environment '
@@ -88,7 +102,6 @@ pipeline {
                         sh 'docker compose -f ./.cicd/docker/docker-compose-dev.yml up -d'
                     }
                 }
-
             }
         }
     }
@@ -102,7 +115,7 @@ pipeline {
                     // remove build images
                     sh "docker rmi $IMAGE_NAME:$TAG 2> /dev/null"
                     sh "docker rmi $REGISTRY_DOMAIN/$IMAGE_NAME:$TAG 2> /dev/null"
-                    // sh "docker rmi $REGISTRY_DOMAIN/$IMAGE_NAME:latest 2> /dev/null"
+                // sh "docker rmi $REGISTRY_DOMAIN/$IMAGE_NAME:latest 2> /dev/null"
                 }
             }
             sh 'docker image prune -f'
