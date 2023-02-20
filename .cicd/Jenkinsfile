@@ -55,7 +55,7 @@ pipeline {
 
         stage('Build image') {
             when {
-                expression { ( env.PROD_DEPLOYMENT_APPROVED && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (env.PROD_DEPLOYMENT_APPROVED != null && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -71,7 +71,7 @@ pipeline {
         }
         stage('Push Image') {
             when {
-                expression { ( env.PROD_DEPLOYMENT_APPROVED && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (env.PROD_DEPLOYMENT_APPROVED != null && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -84,7 +84,7 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                expression { ( env.PROD_DEPLOYMENT_APPROVED && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (env.PROD_DEPLOYMENT_APPROVED != null  && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
