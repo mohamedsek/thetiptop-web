@@ -55,7 +55,7 @@ pipeline {
                     try {
                         timeout(time: 30, unit: 'MINUTES') {
                             canDeployProduction = input message: 'Proceed with build and deployment?',
-                                    parameters: [booleanParam(defaultValue: false, description: 'Proceed with build and deployment?', name: 'prodDeploy')]
+                                    parameters: [booleanParam(defaultValue: false, description: 'Proceed with build and deployment?', name: 'Production Deploy')]
                         }
                         } catch (Exception err) {
                         def user = err.getCauses()[0].getUser()
@@ -71,7 +71,7 @@ pipeline {
 
         stage('Build image') {
             when {
-                expression { (canDeployProduction && env.BRANCH_NAME == 'develop') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'develop') || env.BRANCH_NAME == 'xxdevelop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -87,7 +87,7 @@ pipeline {
         }
         stage('Push Image') {
             when {
-                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'xxdevelop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -100,7 +100,7 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'xxdevelop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
