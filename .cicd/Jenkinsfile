@@ -1,3 +1,5 @@
+def canDeployProduction = false
+
 pipeline {
     agent any
 
@@ -49,13 +51,22 @@ pipeline {
                 branch 'main'
             }
             steps {
-                input message: 'Proceed with build and deployment?', submitterParameter: 'PROD_DEPLOYMENT_APPROVED'
+                script {
+                    try {
+                        timeout(time: 30, unit: 'MINUTES') {
+                            canDeployProduction = input message: 'Proceed with build and deployment?',
+                                    parameters: [booleanParam(defaultValue: false, description: 'This action will have an impact on the production environment. Are you sure you want to continue ?', name: 'Production Deploy')]
+                        }
+                        } catch (Exception err) {
+                        echo 'The timeout has expired,the build and deployment will be skipped. '
+                        }
+                }
             }
         }
 
         stage('Build image') {
             when {
-                expression { (env.PROD_DEPLOYMENT_APPROVED != null && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -71,7 +82,7 @@ pipeline {
         }
         stage('Push Image') {
             when {
-                expression { (env.PROD_DEPLOYMENT_APPROVED != null && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -84,7 +95,7 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                expression { (env.PROD_DEPLOYMENT_APPROVED != null  && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
