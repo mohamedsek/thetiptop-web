@@ -58,13 +58,8 @@ pipeline {
                                     parameters: [booleanParam(defaultValue: false, description: 'This action will have an impact on the production environment. Are you sure you want to continue ?', name: 'Production Deploy')]
                         }
                         } catch (Exception err) {
-                        def user = err.getCauses()[0].getUser()
-                        if ('SYSTEM' == user.toString()) {
-                            echo 'The timeout is expired, the job will be aborted  '
-                        } else {
-                            echo "Process abort by: ${user}"
+                        echo 'The timeout has expired,the build and deployment will be skipped. '
                         }
-                    }
                 }
             }
         }
