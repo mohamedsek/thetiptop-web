@@ -48,12 +48,12 @@ pipeline {
 
         stage('Deploy Approval') {
             when {
-                branch 'develop'
+                branch 'main'
             }
             steps {
                 script {
                     try {
-                        timeout(time: 1, unit: 'MINUTES') {
+                        timeout(time: 30, unit: 'MINUTES') {
                             canDeployProduction = input message: 'Proceed with build and deployment?',
                                     parameters: [booleanParam(defaultValue: false, description: 'This action will have an impact on the production environment. Are you sure you want to continue ?', name: 'Production Deploy')]
                         }
@@ -66,7 +66,7 @@ pipeline {
 
         stage('Build image') {
             when {
-                expression { (canDeployProduction && env.BRANCH_NAME == 'develop') || env.BRANCH_NAME == 'xxdevelop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -82,7 +82,7 @@ pipeline {
         }
         stage('Push Image') {
             when {
-                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'xxdevelop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -95,7 +95,7 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'xxdevelop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
