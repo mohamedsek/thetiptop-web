@@ -12,6 +12,7 @@ pipeline {
         APP_IMAGE = ''
         BUILD_IMAGE_NAME = "tmp/${PROJECT_NAME}-${env.BRANCH_NAME}".toLowerCase()
         BUILD_IMAGE = ''
+        PROD_DEPLOYMENT_APPROVED = ''
     }
     stages {
         stage('Unit Tests') {
@@ -46,16 +47,18 @@ pipeline {
 
         stage('Deploy Approval') {
             when {
-                branch 'main'
+                branch 'develop'
             }
             steps {
-                input message: 'Proceed with build and deployment?', submitterParameter: 'PROD_DEPLOYMENT_APPROVED'
+                script {
+                    env.PROD_DEPLOYMENT_APPROVED = input message: 'Proceed with build and deployment?', submitterParameter: 'PROD_DEPLOYMENT_APPROVED'
+                }
             }
         }
 
         stage('Build image') {
             when {
-                expression { (env.PROD_DEPLOYMENT_APPROVED != null && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { ("yes".equalsIgnorecase(env.PROD_DEPLOYMENT_APPROVED) && env.BRANCH_NAME == 'develop') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -71,7 +74,7 @@ pipeline {
         }
         stage('Push Image') {
             when {
-                expression { (env.PROD_DEPLOYMENT_APPROVED != null && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { ("yes".equalsIgnorecase(env.PROD_DEPLOYMENT_APPROVED) && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -84,7 +87,7 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                expression { (env.PROD_DEPLOYMENT_APPROVED != null  && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { ("yes".equalsIgnorecase(env.PROD_DEPLOYMENT_APPROVED)  && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
