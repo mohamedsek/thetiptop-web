@@ -1,3 +1,5 @@
+def canDeployProduction = false
+
 pipeline {
     agent any
 
@@ -12,7 +14,6 @@ pipeline {
         APP_IMAGE = ''
         BUILD_IMAGE_NAME = "tmp/${PROJECT_NAME}-${env.BRANCH_NAME}".toLowerCase()
         BUILD_IMAGE = ''
-        PROD_DEPLOYMENT_APPROVED = ''
     }
     stages {
         stage('Unit Tests') {
@@ -51,14 +52,26 @@ pipeline {
             }
             steps {
                 script {
-                    env.PROD_DEPLOYMENT_APPROVED = input message: 'Proceed with build and deployment?', submitterParameter: 'PROD_DEPLOYMENT_APPROVED'
+                    try {
+                        timeout(time: 30, unit: 'MINUTES') {
+                            canDeployProduction = input message: 'Proceed with build and deployment?',
+                                    parameters: [booleanParam(defaultValue: false, description: 'Proceed with build and deployment?', name: 'prodDeploy')]
+                        }
+                        } catch (Exception err) {
+                        def user = err.getCauses()[0].getUser()
+                        if ('SYSTEM' == user.toString()) {
+                            echo 'The timeout is expired, the job will be aborted  '
+                        } else {
+                            echo "Process abort by: ${user}"
+                        }
+                    }
                 }
             }
         }
 
         stage('Build image') {
             when {
-                expression { ("yes".equalsIgnorecase(env.PROD_DEPLOYMENT_APPROVED) && env.BRANCH_NAME == 'develop') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'develop') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -74,7 +87,7 @@ pipeline {
         }
         stage('Push Image') {
             when {
-                expression { ("yes".equalsIgnorecase(env.PROD_DEPLOYMENT_APPROVED) && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
@@ -87,7 +100,7 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                expression { ("yes".equalsIgnorecase(env.PROD_DEPLOYMENT_APPROVED)  && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
+                expression { (canDeployProduction && env.BRANCH_NAME == 'main') || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release' }
             }
             steps {
                 script {
