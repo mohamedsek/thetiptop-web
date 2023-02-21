@@ -53,9 +53,9 @@ pipeline {
             steps {
                 script {
                     try {
-                        timeout(time: 30, unit: 'MINUTES') {
+                        timeout(time: 1, unit: 'MINUTES') {
                             canDeployProduction = input message: 'Proceed with build and deployment?',
-                                    parameters: [booleanParam(defaultValue: false, description: 'Proceed with build and deployment?', name: 'Production Deploy')]
+                                    parameters: [booleanParam(defaultValue: false, description: 'This action will have an impact on the production environment. Are you sure you want to continue ?', name: 'Production Deploy')]
                         }
                         } catch (Exception err) {
                         def user = err.getCauses()[0].getUser()
