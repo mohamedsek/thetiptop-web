@@ -1,8 +1,18 @@
 <script>
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import { authenticate } from '$services/userService';
+	import { auth } from './store';
 
+	let authentication;
+	auth.subscribe((value) => {
+		authentication = value;
+	});
+
+	if (browser) {
+		authenticate();
+	}
 </script>
-
 
 <div class="container">
 	<header
@@ -35,8 +45,13 @@
 		</ul>
 
 		<div class="col-md-3 text-end">
-			<a href="/login" class="btn btn-outline-primary me-2">Login</a>
-			<a href="/register" class="btn btn-primary">Sign-up</a>
+			{#if authentication && authentication.isLoggedIn}
+				Hello {authentication.user.firstName}
+				<a href="/auth/logout" rel="external" class="btn btn-outline-primary me-2">Logout</a>
+			{:else}
+				<a href="/login" class="btn btn-outline-primary me-2">Login</a>
+				<a href="/register" class="btn btn-primary">Sign-up</a>
+			{/if}
 		</div>
 	</header>
 </div>
