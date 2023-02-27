@@ -1,4 +1,4 @@
-import apiClient from '$services/apiClient';
+import { apiClient } from '$services/apiClient';
 import { json } from '@sveltejs/kit';
 
 const SESSION_COOKIE_NAME = 'ttt_session';

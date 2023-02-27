@@ -17,7 +17,7 @@ async function fetchAPI(url, method = 'GET', { payload, accept, token } = {}) {
 	return await res;
 }
 
-const apiClient = {
+export const apiClient = {
 	get: async (url, data) => {
 		url;
 		return (await fetchAPI(url, 'GET', data)).json();
@@ -35,8 +35,6 @@ const apiClient = {
 		return (await fetchAPI(url, 'PATCH', data)).json();
 	},
 	postWithRedirect: async (url, data) => {
-		return (await fetchAPI(url, 'POST', data));
+		return await fetchAPI(url, 'POST', data);
 	}
 };
-
-export default apiClient;

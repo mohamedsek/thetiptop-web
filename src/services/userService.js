@@ -1,4 +1,4 @@
-import apiClient from '$services/apiClient';
+import {apiClient} from '$services/apiClient';
 import { auth } from '../routes/store';
 
 export const fetchUserInfo = async (data) => {

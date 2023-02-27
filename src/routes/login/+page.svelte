@@ -1,5 +1,5 @@
 <script>
-	import apiClient from '$services/apiClient';
+	import {apiClient} from '$services/apiClient';
 	import { messageErrors } from '$services/formValidation';
 	import { redirectTo } from '$services/userService';
 	import { field, form } from 'svelte-forms';
@@ -27,8 +27,8 @@
 </script>
 
 <svelte:head>
-	<title>Register</title>
-	<meta name="description" content="Register Page" />
+	<title>Login</title>
+	<meta name="description" content="Login Page" />
 </svelte:head>
 
 <form on:submit={handleSubmit}>

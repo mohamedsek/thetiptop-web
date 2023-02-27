@@ -10,7 +10,6 @@
 	});
 
 	onMount(async () => {
-		console.log("on Mount------------------");
 		await authenticate();
 	});
 </script>
