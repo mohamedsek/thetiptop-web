@@ -1,7 +1,7 @@
 <script>
-	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { authenticate } from '$services/userService';
+	import { onMount } from 'svelte';
 	import { auth } from './store';
 
 	let authentication;
@@ -9,9 +9,10 @@
 		authentication = value;
 	});
 
-	if (browser) {
-		authenticate();
-	}
+	onMount(async () => {
+		console.log("on Mount------------------");
+		await authenticate();
+	});
 </script>
 
 <div class="container">
@@ -27,15 +28,6 @@
 		</a>
 
 		<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-			<!-- <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Home</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-				<a href="/about">About</a>
-			</li>
-			<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-				<a href="/sverdle">Sverdle</a>
-			</li> -->
 			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
 				<a href="/" class="nav-link px-2 link-secondary">Home</a>
 			</li>

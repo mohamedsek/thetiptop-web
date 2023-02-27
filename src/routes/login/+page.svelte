@@ -1,5 +1,7 @@
 <script>
+	import apiClient from '$services/apiClient';
 	import { messageErrors } from '$services/formValidation';
+	import { redirectTo } from '$services/userService';
 	import { field, form } from 'svelte-forms';
 	import { between, email as emailValidator, required } from 'svelte-forms/validators';
 
@@ -15,13 +17,12 @@
 	async function handleSubmit(event) {
 		event.preventDefault();
 		await loginForm.validate();
-		console.log($loginForm);
-
 		if ($loginForm.valid) {
-			console.log('Form is valid');
-			return;
+			await apiClient.postWithRedirect('/api/auth/login', {
+				payload: { email: $email.value, password: $password.value }
+			});
+			await redirectTo();
 		}
-		console.log('Form is NOT valid');
 	}
 </script>
 
@@ -68,5 +69,7 @@
 			</label>
 		</div>
 	</div>
-	<button type="submit" disabled={!$loginForm.valid} class="btn btn-secondary"> Se connecter </button>
+	<button type="submit" disabled={!$loginForm.valid} class="btn btn-secondary">
+		Se connecter
+	</button>
 </form>

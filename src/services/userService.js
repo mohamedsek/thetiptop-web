@@ -1,29 +1,26 @@
+import apiClient from '$services/apiClient';
 import { auth } from '../routes/store';
-import { parse } from 'cookie';
 
-const SESSION_COOKIE_NAME = 'ttt_session'
+export const fetchUserInfo = async (data) => {
+	const response = await apiClient.get('/auth/userinfo');
+	return response;
+};
 
+export const authenticate = async () => {
+	const userInfo = await fetchUserInfo();
+	if (userInfo && userInfo.email) {
+		auth.update((oldValue) => {
+			return {
+				...oldValue,
+				isLoggedIn: true,
+				user: userInfo
+			};
+		});
+	}
+	return userInfo;
+};
 
-export const fetchUserInfo = () => {
-    const cookies = parse(document.cookie);
-    let token = cookies[SESSION_COOKIE_NAME]
-    if (token) {
-        // fetch vers backend with jwt token
-        return { firstName: "soukaina", email: "sk@gmail.com" };
-    }
-    return null;
-}
-
-export const authenticate = () => {
-    console.log("Attempt to authenticate");
-    const userInfo = fetchUserInfo();
-    if (userInfo) {
-        auth.update(oldValue => {
-            return {
-                ...oldValue,
-                isLoggedIn: true,
-                user: userInfo
-            };
-        })
-    }
-}
+export const redirectTo = async () => {
+	const userInfo = await fetchUserInfo();
+	window.location.href = '/?aa';
+};

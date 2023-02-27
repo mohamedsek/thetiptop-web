@@ -39,6 +39,8 @@
 	<meta name="description" content="Register Page" />
 </svelte:head>
 
+<a href="/api/oauth2/authorize/google">Auth with Google</a>
+<a href="/api/oauth2/authorize/facebook">Auth with Facebook (config a ajouté coté back)</a>
 <form on:submit={handleSubmit}>
 	<div class="mb-3">
 		<div class="form-floating">
@@ -52,7 +54,8 @@
 			<label class={!$email.valid && 'text-danger'} for="floatingEmail">
 				{$registrationForm.hasError('email.required') ? messageErrors.email.required : ''}
 				{$registrationForm.hasError('email.not_an_email') ? messageErrors.email.not_an_email : ''}
-				{!$registrationForm.hasError('email.required') && !$registrationForm.hasError('email.not_an_email')
+				{!$registrationForm.hasError('email.required') &&
+				!$registrationForm.hasError('email.not_an_email')
 					? 'E-mail'
 					: ''}
 			</label>
@@ -71,7 +74,8 @@
 			<label class={!$password.valid && 'text-danger'} for="floatingPassword">
 				{$registrationForm.hasError('password.required') ? messageErrors.password.required : ''}
 				{$registrationForm.hasError('password.between') ? messageErrors.password.between : ''}
-				{!$registrationForm.hasError('password.required') && !$registrationForm.hasError('email.between')
+				{!$registrationForm.hasError('password.required') &&
+				!$registrationForm.hasError('email.between')
 					? 'Mot de passe'
 					: ''}
 			</label>
@@ -88,7 +92,9 @@
 				bind:value={$confirmPassword.value}
 			/>
 			<label class={!$confirmPassword.valid && 'text-danger'} for="floatingConfirmPassword">
-				{$registrationForm.hasError('confirmPassword.required') ? messageErrors.confirmPassword.required : ''}
+				{$registrationForm.hasError('confirmPassword.required')
+					? messageErrors.confirmPassword.required
+					: ''}
 				{$registrationForm.hasError('confirmPassword.confirm_password_does_not_match')
 					? messageErrors.confirmPassword.confirm_password_does_not_match
 					: ''}
