@@ -1,15 +1,15 @@
 const addCookie = (cookies, name, value, age) => {
-    cookies.set(name, value, {
-        path: '/',
-        httpOnly: false,
-        sameSite: 'strict',
-        secure: true,
-        maxAge: age,
-    });
-}
+	cookies.set(name, value, {
+		path: '/',
+		httpOnly: true,
+		sameSite: 'strict',
+		secure: true,
+		maxAge: age
+	});
+};
 
-const SESSION_COOKIE_NAME = 'ttt_session'
+// todo extract maxAge and cookie name to env variable
+const SESSION_COOKIE_NAME = 'ttt_session';
+const SESSION_COOKIE_AGE = 60 * 30;
 
-
-export { addCookie, SESSION_COOKIE_NAME };
-
+export { addCookie, SESSION_COOKIE_NAME, SESSION_COOKIE_AGE };

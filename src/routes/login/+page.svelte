@@ -1,5 +1,5 @@
 <script>
-	import {apiClient} from '$services/apiClient';
+	import { apiClient } from '$services/apiClient';
 	import { messageErrors } from '$services/formValidation';
 	import { redirectTo } from '$services/userService';
 	import { field, form } from 'svelte-forms';

@@ -1,7 +1,0 @@
-import { writable } from 'svelte/store';
-
-export const auth = writable({
-    isLoggedIn: false,
-    token: null,
-    user: null
-});

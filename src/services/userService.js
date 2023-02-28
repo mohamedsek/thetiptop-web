@@ -1,26 +1,18 @@
-import {apiClient} from '$services/apiClient';
-import { auth } from '../routes/store';
+import { apiClient } from '$services/apiClient';
+import { SESSION_COOKIE_NAME } from '$services/cookieUtils';
 
-export const fetchUserInfo = async (data) => {
-	const response = await apiClient.get('/auth/userinfo');
+export const fetchUserInfo = async (baseUrl, token) => {
+	const response = await apiClient.get(`${baseUrl}/api/auth/userinfo`, { token });
 	return response;
 };
 
-export const authenticate = async () => {
-	const userInfo = await fetchUserInfo();
-	if (userInfo && userInfo.email) {
-		auth.update((oldValue) => {
-			return {
-				...oldValue,
-				isLoggedIn: true,
-				user: userInfo
-			};
-		});
-	}
-	return userInfo;
+export const redirectTo = async () => {
+	window.location.href = '/';
 };
 
-export const redirectTo = async () => {
-	const userInfo = await fetchUserInfo();
-	window.location.href = '/?aa';
+export const authenticateUser = async (event) => {
+	const { cookies } = event;
+	const token = cookies.get(SESSION_COOKIE_NAME);
+	const userInfo = await fetchUserInfo(event.url.origin, token);
+	return userInfo;
 };
