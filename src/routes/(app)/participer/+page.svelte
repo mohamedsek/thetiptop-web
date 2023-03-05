@@ -1,3 +1,25 @@
+<script>
+	import * as api from '$lib/services/api.js';
+
+	const participate = async (event) => {
+		console.log('PARTICIPATE CLICKED');
+		const formData = new FormData(event.target);
+
+		let ticketCode = {
+			code: formData.get('code')
+		};
+
+        console.log(ticketCode);
+
+		let gain = await api.post(
+			'/tickets/gains',
+			ticketCode,
+			'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBkb21haW4uY29tIiwiaWF0IjoxNjc1NTQxNzQ1LCJleHAiOjE2NzU1NTk3NDV9.dtVpMPGSSRWBgROsiQ7KHSlLWIbBN3gKFiN7j__Mw_a4_rjiqPxmKP0zjZQ7o70KOL79bNQuUZqPbEIeWH1YhQ'
+		);
+        console.log(gain);
+	};
+</script>
+
 <div class="d-flex justify-content-center">
 	<img src="/img/tea-banner.png" class="img-fluid rounded-3" alt="Tea banner" />
 </div>
@@ -17,13 +39,14 @@
 	Vous avez déjà un code? <br />entrez le ci-dessous et découvrez votre gains !
 </h2>
 
-<form class="row mb-5">
+<form class="row mb-5" method="POST" on:submit|preventDefault={participate}>
 	<div class="col-auto">
 		<input
 			type="text"
 			class="form-control-lg"
 			id="ticket-code-input"
 			placeholder="Entrer votre code"
+			name="code"
 		/>
 	</div>
 	<div class="col-4">
@@ -33,14 +56,16 @@
 
 <h3 class="text-success text-center fs-2 fw-bold">MES GAINS</h3>
 <div class="gains-list border rounded text-center mt-3 pt-3 pb-4">
-    <p class="text-success fs-5">Vous n'avez pas encore de gain à afficher !</p>
-    <p>Participer au concours en obtenant un code pour tout achat supérieur à 49€ en magasin ou en ligne.</p>
-    <p>Tous les tickets sont gagnants!</p>
+	<p class="text-success fs-5">Vous n'avez pas encore de gain à afficher !</p>
+	<p>
+		Participer au concours en obtenant un code pour tout achat supérieur à 49€ en magasin ou en
+		ligne.
+	</p>
+	<p>Tous les tickets sont gagnants!</p>
 </div>
 
-
 <style>
-    .gains-list {
-        background-color: #EFEFEF;
-    }
+	.gains-list {
+		background-color: #efefef;
+	}
 </style>
