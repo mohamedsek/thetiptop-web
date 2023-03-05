@@ -1,7 +1,6 @@
 <script>
 	import '$lib/css/reset.css';
 	import '$lib/css/normalize.css';
-	import './styles.css';
 	import 'bootstrap/dist/css/bootstrap.min.css';
 	import Footer from './Footer.svelte';
 	import Header from './Header.svelte';
