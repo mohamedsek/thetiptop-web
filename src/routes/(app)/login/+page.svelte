@@ -1,4 +1,6 @@
 <script>
+	import { applyAction, deserialize } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import { messageErrors } from '$services/formValidation';
 	import { field, form } from 'svelte-forms';
 	import { between, email as emailValidator, required } from 'svelte-forms/validators';
@@ -13,24 +15,44 @@
 	const loginForm = form(email, password);
 
 	async function handleSubmit(event) {
-		event.preventDefault();
 		await loginForm.validate();
-		console.log($loginForm);
-
 		if ($loginForm.valid) {
-			console.log('Form is valid');
-			return;
+			const data = new URLSearchParams();
+			data.append('email', $email.value);
+			data.append('password', $password.value);
+
+			const response = await fetch(this.action, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: data.toString()
+			});
+
+			/** @type {import('@sveltejs/kit').ActionResult} */
+			const result = deserialize(await response.text());
+
+			if (result.type === 'success') {
+				// re-run all `load` functions, following the successful update
+				await invalidateAll();
+			}
+			applyAction(result);
 		}
-		console.log('Form is NOT valid');
 	}
 </script>
 
 <svelte:head>
-	<title>Register</title>
-	<meta name="description" content="Register Page" />
+	<title>Login</title>
+	<meta name="description" content="Login Page" />
 </svelte:head>
 
-<form on:submit={handleSubmit}>
+<div class="mb-4 mt-3 social-netowrks">
+	<a href="/api/oauth2/authorize/google">Auth with Google</a>
+	<br>
+	<a href="/api/oauth2/authorize/facebook">Auth with Facebook (config a ajouté coté back)</a>
+</div>
+
+<form method="POST" on:submit|preventDefault={handleSubmit}>
 	<div class="mb-3">
 		<div class="form-floating">
 			<input
@@ -68,5 +90,7 @@
 			</label>
 		</div>
 	</div>
-	<button type="submit" disabled={!$loginForm.valid} class="btn btn-secondary"> Se connecter </button>
+	<button type="submit" disabled={!$loginForm.valid} class="btn btn-secondary">
+		Se connecter
+	</button>
 </form>
