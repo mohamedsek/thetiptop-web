@@ -1,8 +1,8 @@
 <script>
 	import '$lib/css/reset.css';
 	import '$lib/css/normalize.css';
+	// import 'bootstrap/dist/js/bootstrap.min.js';
 	import 'bootstrap/dist/css/bootstrap.min.css';
-	import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 	import '$lib/css/app-styles.css';
 	import Footer from './Footer.svelte';
 	import Header from './Header.svelte';

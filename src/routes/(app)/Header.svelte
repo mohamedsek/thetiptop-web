@@ -45,11 +45,11 @@
 						</li>
 		
 						<li class="text-center">
-							<a href="#jeux-concours" class="nav-link px-2 link-dark">Le jeu-concours</a>
+							<a href="/#jeux-concours" class="nav-link px-2 link-dark">Le jeu-concours</a>
 						</li>
 
 						<li class="text-center">
-							<a href="#lot-a-gagner" class="nav-link px-2 link-dark">Les gains</a>
+							<a href="/#lot-a-gagner" class="nav-link px-2 link-dark">Les gains</a>
 						</li>
 
 						{#if props?.user}
