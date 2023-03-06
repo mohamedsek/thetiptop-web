@@ -1,15 +1,25 @@
 const messageErrors = {
 	email: {
-		required: "L'adresse email est requise.",
+		required: "L'adresse email est obligatoire.",
 		not_an_email: "L'adresse email est invalide."
 	},
 	password: {
-		required: 'Le mot de passe est requis.',
-		between: 'Le mot de passe doit contenir au minimum 8.'
+		required: 'Le mot de passe est obligatoire.',
+		between: 'Le mot de passe doit contenir entre 8 et 64 caractères.'
 	},
 	confirmPassword: {
 		required: 'La Confirmation du mot de passe est obligatoire.',
-		confirm_password_does_not_match: 'Les mots de passe ne correspondent pas !'
+		confirm_password_does_not_match: 'La confirmation du mot de passe ne correspond pas.'
+	},
+	firstName: {
+		required: 'Le prénom est obligatoire.',
+		alpha: 'Le prénom ne peut contenir que des lettres.',
+		between: 'Le prénom doit contenir entre 3 et 50 caractères.'
+	},
+	lastName: {
+		required: 'Le nom est obligatoire.',
+		alpha: 'Le nom ne peut contenir que des lettres.',
+		between: 'Le nom doit contenir entre 3 et 50 caractères.'
 	}
 };
 
