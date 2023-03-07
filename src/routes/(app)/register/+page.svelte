@@ -50,7 +50,7 @@
 				firstName: $firstName.value,
 				lastName: $lastName.value
 			};
-			await apiClient.postWithRedirect('/api/auth/register', {
+			await apiClient.postWithRedirect(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, {
 				payload: formData
 			});
 			window.location.href = '/login?registration=success';
@@ -64,9 +64,11 @@
 </svelte:head>
 
 <div class="mb-4 mt-3 social-netowrks">
-	<a href="/api/oauth2/authorize/google">Auth with Google</a>
-	<br>
-	<a href="/api/oauth2/authorize/facebook">Auth with Facebook (config a ajouté coté back)</a>
+	<a href="{import.meta.env.VITE_API_BASE_URL}/oauth2/authorize/google">Auth with Google</a>
+	<br />
+	<a href="{import.meta.env.VITE_API_BASE_URL}/oauth2/authorize/facebook"
+		>Auth with Facebook (config a ajouté coté back)</a
+	>
 </div>
 
 <form on:submit={handleSubmit}>
