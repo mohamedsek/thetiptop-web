@@ -1,44 +1,34 @@
 <script>
 </script>
 
-<footer class="d-flex flex-col text-center justify-between py-4 px-4 bg-primary text-white">
-	<div class="mb-3 mb-md-0">
-		<!-- Copyright © [Année de création du projet] [Nom de l'auteur ou de l'entreprise]. Tous les droits sont réservés. -->
-
-		Copyright © 2023 (PFE institut-f2i). Tous les droits sont réservés.
+<footer class="bg-color text-white">
+	<div class="container py-4">
+		<div class="row">
+			<div class="col-lg-4 col-md-6 col-12"><a href="/about">À propos de nous</a></div>
+			<div class="col-lg-4 col-md-6 col-12"><a href="#">Nous contacter</a></div>
+			<div class="col-lg-4 col-md-6 col-12"><a href="#">Politique de Confidentialité</a></div>
+			<div class="col-lg-4 col-md-6 col-12"><a href="#">Cookies </a></div>
+			<div class="col-lg-4 col-md-6 col-12"><a href="#">Mentions légales </a></div>
+			<div class="col-lg-4 col-md-6 col-12"><a href="#">CGU </a></div>
+			<div class="col-lg-4 col-md-6 col-12"><a href="#">CGV </a></div>
+		</div>
 	</div>
-	<div class="d-flex">
-		<a href="#" class="me-4 text-white">
-			<i class="fab fa-facebook-f" />
-		</a>
-		<a href="#" class="me-4 text-white">
-			<i class="fab fa-twitter" />
-		</a>
-		<a href="#" class="me-4 text-white">
-			<i class="fab fa-google" />
-		</a>
-		<a href="#" class="text-white">
-			<i class="fab fa-linkedin-in" />
-		</a>
+
+	<div class="text-white py-2">
+		<div class="container text-center">
+			<hr />
+			<p class="mb-0">Copyright © 2022 THE TIP TOP</p>
+		</div>
 	</div>
 </footer>
 
 <style>
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-		clear: both;
-		position: relative;
-		height: 50px;
-		margin-top: -50px;
+	.bg-color {
+		background: #333333;
 	}
 
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
+	footer a {
+		color: #ffffff;
+		text-decoration: none;
 	}
 </style>
