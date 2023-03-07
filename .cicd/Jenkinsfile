@@ -24,6 +24,7 @@ pipeline {
                     // Run unit tests with vitest
                     BUILD_IMAGE.inside {
                         sh 'cd /usr/src/app && npm run test:unit:ci'
+                        sh 'ls -al'
                         junit(testResults: './**/junit.xml', allowEmptyResults : true)
                     }
                 }
@@ -36,6 +37,7 @@ pipeline {
                     // Run playwright tests
                     BUILD_IMAGE.inside {
                         sh 'cd /usr/src/app && npm run test'
+                        sh 'ls -al'
                         junit(testResults: './**/junit.xml', allowEmptyResults : true)
                     }
                 }
