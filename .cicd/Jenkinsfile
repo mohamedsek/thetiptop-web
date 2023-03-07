@@ -24,11 +24,12 @@ pipeline {
                     // Run unit tests with vitest
                     BUILD_IMAGE.inside {
                         sh 'npm i'
-                        sh 'npm run test:unit:ci'
+                        sh 'npm run test:unit:coverage'
                         sh 'pwd'
                         sh 'ls -al'
                         sh 'ls -al ./unit-test-results'
                         junit(testResults: 'unit-test-results/junit.xml', allowEmptyResults : true)
+                        publishCoverage adapters: [coberturaAdapter('coverage/cobertura-coverage.xml')]
                     }
                 }
             }

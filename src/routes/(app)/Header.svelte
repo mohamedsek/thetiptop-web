@@ -3,6 +3,10 @@
 	import logoDesktop from '$lib/assets/logo_desktop.png';
 	import logoMobile from '$lib/assets/logo_mobile.png';
 
+	let collapseMenu = true;
+	function toggleMenu() {
+		collapseMenu = !collapseMenu;
+	}
 	export let props;
 </script>
 
@@ -22,17 +26,16 @@
 					</a>
 				</div>
 				<button
+					on:click={toggleMenu}
 					class="navbar-toggler"
 					type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#navbarNav"
 					aria-controls="navbarNav"
 					aria-expanded="false"
 					aria-label="Toggle navigation"
 				>
 					<span class="navbar-toggler-icon" />
 				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
+				<div class="{collapseMenu ? 'collapse' : ''} navbar-collapse" id="navbarNav">
 					<!-- <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> -->
 
 					<ul class="navbar-nav justify-content-center col-xs-12 ms-auto">
@@ -43,7 +46,7 @@
 								>Acceuil</a
 							>
 						</li>
-		
+
 						<li class="text-center">
 							<a href="/#jeux-concours" class="nav-link px-2 link-dark">Le jeu-concours</a>
 						</li>
