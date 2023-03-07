@@ -4,7 +4,7 @@
 <footer class="bg-color text-white">
 	<div class="container py-4">
 		<div class="row">
-			<div class="col-lg-4 col-md-6 col-12"><a href="#">À propos de nous</a></div>
+			<div class="col-lg-4 col-md-6 col-12"><a href="/about">À propos de nous</a></div>
 			<div class="col-lg-4 col-md-6 col-12"><a href="#">Nous contacter</a></div>
 			<div class="col-lg-4 col-md-6 col-12"><a href="#">Politique de Confidentialité</a></div>
 			<div class="col-lg-4 col-md-6 col-12"><a href="#">Cookies </a></div>
