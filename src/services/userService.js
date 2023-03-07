@@ -1,7 +1,7 @@
 import { apiClient } from '$services/apiClient';
 
-export const fetchUserInfo = async (baseUrl, token) => {
-	const response = await apiClient.get(`${baseUrl}/api/auth/userinfo`, { token });
+export const fetchUserInfo = async (token) => {
+	const response = await apiClient.get(`${import.meta.env.VITE_API_BASE_URL}/auth/userinfo`, { token });
 	return response;
 };
 

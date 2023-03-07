@@ -24,7 +24,7 @@ export const actions = {
 		const data = await request.formData();
 		const email = data.get('email');
 		const password = data.get('password');
-		const { accessToken } = await apiClient.post(`${url.origin}/api/auth/login`, {
+		const { accessToken } = await apiClient.post(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, {
 			payload: { email: email, password: password }
 		});
 		addCookie(cookies, SESSION_COOKIE_NAME, accessToken, SESSION_COOKIE_AGE);
