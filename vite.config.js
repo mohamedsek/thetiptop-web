@@ -17,15 +17,6 @@ export default ({ mode }) => {
 		test: {
 			include: ['src/**/*.{test,spec}.{js,ts}'],
 			watch: false
-		},
-		server: {
-			proxy: {
-				'/api/': {
-					target: env.VITE_API_BASE_URL,
-					changeOrigin: true,
-					rewrite: (path) => path.replace(/^\/api/, '')
-				}
-			}
 		}
 	});
 };
