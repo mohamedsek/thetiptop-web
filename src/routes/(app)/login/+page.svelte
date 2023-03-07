@@ -47,9 +47,9 @@
 </svelte:head>
 
 <div class="mb-4 mt-3 social-netowrks">
-	<a href="/api/oauth2/authorize/google">Auth with Google</a>
+	<a href="{import.meta.env.VITE_API_BASE_URL}/oauth2/authorize/google">Auth with Google</a>
 	<br>
-	<a href="/api/oauth2/authorize/facebook">Auth with Facebook (config a ajouté coté back)</a>
+	<a href="{import.meta.env.VITE_API_BASE_URL}/oauth2/authorize/facebook">Auth with Facebook (config a ajouté coté back)</a>
 </div>
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
