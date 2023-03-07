@@ -2,7 +2,62 @@
 	<title>About</title>
 	<meta name="description" content="About this app" />
 </svelte:head>
+<div class="about-us">
+	<h2>À propos de Thétiptop</h2>
+	<p>Bienvenue sur notre plateforme de jeux concours Thétiptop ! Nous sommes une entreprise passionnée par le thé et tout ce qui s'y rapporte. Nous sommes fiers de proposer une large sélection de thés de haute qualité provenant des quatre coins du monde, ainsi que des accessoires de thé élégants pour accompagner votre expérience de dégustation.</p>
+	<p>Chez Thétiptop, nous croyons en la magie des moments de thé, que ce soit en solitaire ou en compagnie de vos proches. C'est pourquoi nous avons décidé d'organiser des jeux concours pour donner la chance à nos clients de gagner des prix uniques et intéressants.</p>
+	<ul>
+	  <li>Notre équipe est composée d'experts du thé qui sont passionnés par leur travail et qui se consacrent à fournir une expérience exceptionnelle à nos clients.</li>
+	  <li>Nous sommes fiers de notre service clientèle, qui est à votre disposition pour répondre à toutes vos questions et vous aider à trouver les produits de thé qui conviennent le mieux à vos besoins.</li>
+	  <li>Nous sommes également engagés envers la durabilité et la responsabilité sociale. Nous travaillons avec des producteurs de thé respectueux de l'environnement et nous cherchons constamment à réduire notre empreinte carbone en minimisant les déchets et en utilisant des emballages durables.</li>
+	</ul>
+	<p>Nous espérons que vous apprécierez notre plateforme de jeux concours Thétiptop et que vous découvrirez de nouveaux thés et accessoires de thé qui enrichiront votre expérience de dégustation. Merci de nous faire confiance et de faire partie de notre communauté de thé !</p>
+	<p><a href="#">Contactez-nous</a> pour toute question ou suggestion.</p>
+  </div>
+<style>
+	.about-us {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
 
-<div class="text-column">
-	<h1>About Page</h1>
-</div>
+.about-us h2 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.about-us p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #666;
+  text-align: justify;
+}
+
+.about-us ul {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+}
+
+.about-us ul li {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.about-us a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.about-us a:hover {
+  text-decoration: underline;
+}
+</style>
