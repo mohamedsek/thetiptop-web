@@ -16,6 +16,8 @@ export default ({ mode }) => {
 		},
 		test: {
 			include: ['src/**/*.{test,spec}.{js,ts}'],
+			reporters:'junit',
+			outputFile: './unit-test-results/junit.xml',
 			watch: false
 		}
 	});
