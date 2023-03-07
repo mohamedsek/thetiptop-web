@@ -45,6 +45,7 @@ pipeline {
                         sh 'ls -al'
                         sh 'ls -al ./unit-test-results'
                         junit(testResults: 'e2etests-results/junit.xml', allowEmptyResults : true)
+                        publishCoverage adapters: [coberturaAdapter('coverage/cobertura-coverage.xml')]
                     }
                 }
             }
