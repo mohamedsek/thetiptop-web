@@ -5,7 +5,8 @@ const config = {
 		port: 4173
 	},
 	testDir: 'tests',
-	reporter: [['junit', { outputFile: './e2etests-results/junit.xml' }]
+	reporter: [
+		['junit', { outputFile: './e2etests-results/junit.xml' }]
 	]
 };
 
