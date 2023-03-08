@@ -5,6 +5,8 @@
 	import { field, form } from 'svelte-forms';
 	import { between, email as emailValidator, required } from 'svelte-forms/validators';
 
+	let loginFailedErrorMessage;
+
 	const email = field('email', '', [required(), emailValidator()], {
 		stopAtFirstError: true
 	});
@@ -35,6 +37,9 @@
 			if (result.type === 'success') {
 				// re-run all `load` functions, following the successful update
 				await invalidateAll();
+			} else {
+				loginFailedErrorMessage = "Votre e-mail ou votre mot de passe n'est pas correct.";
+				password.reset();
 			}
 			applyAction(result);
 		}
@@ -52,6 +57,12 @@
 	<a href="{import.meta.env.VITE_API_BASE_URL}/oauth2/authorize/facebook">Auth with Facebook (config a ajouté coté back)</a>
 </div>
 
+{#if loginFailedErrorMessage}
+	<!-- <p class="text-danger">{loginFailedErrorMessage}</p> -->
+	<div class="alert alert-danger" role="alert">
+		{loginFailedErrorMessage}
+	</div>
+{/if}
 <form method="POST" on:submit|preventDefault={handleSubmit}>
 	<div class="mb-3">
 		<div class="form-floating">
