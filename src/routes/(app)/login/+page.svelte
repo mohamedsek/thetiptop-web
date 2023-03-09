@@ -4,6 +4,7 @@
 	import { messageErrors } from '$services/formValidation';
 	import { field, form } from 'svelte-forms';
 	import { between, email as emailValidator, required } from 'svelte-forms/validators';
+	import AuthSocialNetworks from '$lib/components/app/auth/AuthSocialNetworks.svelte';
 
 	let loginFailedErrorMessage;
 
@@ -51,57 +52,71 @@
 	<meta name="description" content="Login Page" />
 </svelte:head>
 
-<div class="mb-4 mt-3 social-netowrks">
-	<a href="{import.meta.env.VITE_API_BASE_URL}/oauth2/authorize/google">Auth with Google</a>
-	<br>
-	<a href="{import.meta.env.VITE_API_BASE_URL}/oauth2/authorize/facebook">Auth with Facebook (config a ajouté coté back)</a>
+<div class="container row  border rounded m-auto p-4 col-md-6">
+	<h1 class="text-center fw-bold fs-3 mt-4">Connexion</h1>
+	<div class="mb-4 mt-3 social-netowrks social-icons d-flex justify-content-center ">
+		<AuthSocialNetworks />
+	</div>
+
+	<div class="text-center fw-bold fs-6 mb-4 text-secondary">
+		<sup class="d-none d-sm-inline">_________</sup> Ou avec votre EMAIL <sup class="d-none d-sm-inline">_________</sup>
+	</div>
+
+	{#if loginFailedErrorMessage}
+		<!-- <p class="text-danger">{loginFailedErrorMessage}</p> -->
+		<div class="alert alert-danger" role="alert">
+			{loginFailedErrorMessage}
+		</div>
+	{/if}
+	<form method="POST" on:submit|preventDefault={handleSubmit}>
+		<div class="mb-3">
+			<div class="form-floating">
+				<input
+					type="email"
+					class="form-control {!$email.valid && 'is-invalid'}"
+					id="floatingEmail"
+					placeholder="mail@exemple.fr"
+					bind:value={$email.value}
+				/>
+				<label class={!$email.valid && 'text-danger'} for="floatingEmail">
+					{$loginForm.hasError('email.required') ? messageErrors.email.required : ''}
+					{$loginForm.hasError('email.not_an_email') ? messageErrors.email.not_an_email : ''}
+					{!$loginForm.hasError('email.required') && !$loginForm.hasError('email.not_an_email')
+						? 'E-mail'
+						: ''}
+				</label>
+			</div>
+		</div>
+
+		<div class="mb-3">
+			<div class="form-floating">
+				<input
+					type="password"
+					class="form-control {!$password.valid && 'is-invalid'}"
+					id="floatingPassword"
+					placeholder="Mot de passe"
+					bind:value={$password.value}
+				/>
+				<label class={!$password.valid && 'text-danger'} for="floatingPassword">
+					{$loginForm.hasError('password.required') ? messageErrors.password.required : ''}
+					{$loginForm.hasError('password.between') ? messageErrors.password.between : ''}
+					{!$loginForm.hasError('password.required') && !$loginForm.hasError('email.between')
+						? 'Mot de passe'
+						: ''}
+				</label>
+			</div>
+		</div>
+		<button type="submit" disabled={!$loginForm.valid} class="btn-signIn"> Se connecter </button>
+	</form>
 </div>
 
-{#if loginFailedErrorMessage}
-	<!-- <p class="text-danger">{loginFailedErrorMessage}</p> -->
-	<div class="alert alert-danger" role="alert">
-		{loginFailedErrorMessage}
-	</div>
-{/if}
-<form method="POST" on:submit|preventDefault={handleSubmit}>
-	<div class="mb-3">
-		<div class="form-floating">
-			<input
-				type="email"
-				class="form-control {!$email.valid && 'is-invalid'}"
-				id="floatingEmail"
-				placeholder="mail@exemple.fr"
-				bind:value={$email.value}
-			/>
-			<label class={!$email.valid && 'text-danger'} for="floatingEmail">
-				{$loginForm.hasError('email.required') ? messageErrors.email.required : ''}
-				{$loginForm.hasError('email.not_an_email') ? messageErrors.email.not_an_email : ''}
-				{!$loginForm.hasError('email.required') && !$loginForm.hasError('email.not_an_email')
-					? 'E-mail'
-					: ''}
-			</label>
-		</div>
-	</div>
-
-	<div class="mb-3">
-		<div class="form-floating">
-			<input
-				type="password"
-				class="form-control {!$password.valid && 'is-invalid'}"
-				id="floatingPassword"
-				placeholder="Mot de passe"
-				bind:value={$password.value}
-			/>
-			<label class={!$password.valid && 'text-danger'} for="floatingPassword">
-				{$loginForm.hasError('password.required') ? messageErrors.password.required : ''}
-				{$loginForm.hasError('password.between') ? messageErrors.password.between : ''}
-				{!$loginForm.hasError('password.required') && !$loginForm.hasError('email.between')
-					? 'Mot de passe'
-					: ''}
-			</label>
-		</div>
-	</div>
-	<button type="submit" disabled={!$loginForm.valid} class="btn btn-secondary">
-		Se connecter
-	</button>
-</form>
+<style>
+	.btn-signIn {
+		background-color: #00aa88;
+		color: #fff;
+		padding: 5px 20px;
+		border-radius: 15px;
+		font-weight: 600;
+		border: none;
+	}
+</style>
