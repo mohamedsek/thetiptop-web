@@ -1,22 +1,36 @@
 <script>
 	import * as api from '$lib/services/api.js';
 
+	let userGains = [];
+
 	const participate = async (event) => {
-		console.log('PARTICIPATE CLICKED');
 		const formData = new FormData(event.target);
 
 		let ticketCode = {
 			code: formData.get('code')
 		};
 
-        console.log(ticketCode);
+		console.log(ticketCode);
 
-		let gain = await api.post(
-			'/tickets/gains',
+		// TODO remove Token from call params
+		let askForGainRes = await api.post(
+			'/tickets/gain',
 			ticketCode,
-			'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBkb21haW4uY29tIiwiaWF0IjoxNjc1NTQxNzQ1LCJleHAiOjE2NzU1NTk3NDV9.dtVpMPGSSRWBgROsiQ7KHSlLWIbBN3gKFiN7j__Mw_a4_rjiqPxmKP0zjZQ7o70KOL79bNQuUZqPbEIeWH1YhQ'
+			'injectToken'
 		);
-        console.log(gain);
+		if (askForGainRes.ok) {
+			// reload user's gains
+			// TODO remove Token from call params
+			let userGainsRes = await api.get(
+				'/tickets/user',
+				'injectToken'
+			);
+
+			if (userGainsRes.ok) {
+				userGains = await userGainsRes.json();
+				console.log(userGains);
+			}
+		}
 	};
 </script>
 
@@ -56,12 +70,22 @@
 
 <h3 class="text-success text-center fs-2 fw-bold">MES GAINS</h3>
 <div class="gains-list border rounded text-center mt-3 pt-3 pb-4">
-	<p class="text-success fs-5">Vous n'avez pas encore de gain à afficher !</p>
-	<p>
-		Participer au concours en obtenant un code pour tout achat supérieur à 49€ en magasin ou en
-		ligne.
-	</p>
-	<p>Tous les tickets sont gagnants!</p>
+	{#if !userGains.length}
+		<p class="text-success fs-5">Vous n'avez pas encore de gain à afficher !</p>
+		<p>
+			Participer au concours en obtenant un code pour tout achat supérieur à 49€ en magasin ou en
+			ligne.
+		</p>
+		<p>Tous les tickets sont gagnants!</p>
+	{:else}
+		<div class="d-flex justify-content-center">
+			<div class="text-start">
+				{#each userGains as gain}
+					<p>{gain.ticketCode}: {gain.gainTitle}</p>
+				{/each}
+			</div>
+		</div>
+	{/if}
 </div>
 
 <style>
