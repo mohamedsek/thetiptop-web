@@ -1,8 +1,9 @@
 import { error } from '@sveltejs/kit';
 
-//TODO: move to .env
-const base = 'http://localhost:8080';
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
+// TODO Remove token from params
+// TODO get token from LocalStorage
 async function send({ method, path, data, token }) {
 	const opts = { method, headers: {} };
 
@@ -12,16 +13,11 @@ async function send({ method, path, data, token }) {
 	}
 
 	if (token) {
-		opts.headers['Authorization'] = `Token ${token}`;
+		opts.headers['Authorization'] = `Bearer ${token}`;
 	}
 
-	const res = await fetch(`${base}/${path}`, opts);
-	if (res.ok || res.status === 422) {
-		const text = await res.text();
-		return text ? JSON.parse(text) : {};
-	}
-
-	throw error(res.status);
+	const res = await fetch(`${baseUrl}${path}`, opts);
+	return res;
 }
 
 export function get(path, token) {
