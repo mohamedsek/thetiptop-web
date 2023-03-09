@@ -1,11 +1,11 @@
 <script>
 </script>
 
-<footer class="bg-color text-white">
-	<div class="container py-4">
+<footer class="bg-color text-white mt-5">
+	<div class="container py-3 ">
 		<div class="row">
 			<div class="col-lg-4 col-md-6 col-12"><a href="/about">À propos de nous</a></div>
-			<div class="col-lg-4 col-md-6 col-12"><a href="#">Nous contacter</a></div>
+			<div class="col-lg-4 col-md-6 col-12"><a href="/contact">Nous contacter</a></div>
 			<div class="col-lg-4 col-md-6 col-12"><a href="#">Politique de Confidentialité</a></div>
 			<div class="col-lg-4 col-md-6 col-12"><a href="#">Cookies </a></div>
 			<div class="col-lg-4 col-md-6 col-12"><a href="#">Mentions légales </a></div>

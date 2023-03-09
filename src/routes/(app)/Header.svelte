@@ -14,7 +14,7 @@
 	<header
 		class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom border-dark"
 	>
-		<nav class="container navbar navbar-expand-md navbar-light">
+		<nav class="container navbar navbar-expand-lg navbar-light">
 			<div class="container-fluid">
 				<div class="logo-wrapper">
 					<a

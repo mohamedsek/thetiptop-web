@@ -14,13 +14,13 @@
 	<div class="row mb-5 ">
 		<img width="100%" src={mainHomePageImage} alt="thé" />
 	</div>
-	<div id="jeux-concours" class="mb-4 row text-center">
+	<div id="jeux-concours" class="mb-4 row text-center ">
 		<h1 class="title">
 			ThéTipTop organise un jeu-concours<br />
 			à l'occasion d'ouverture de notre 10ème Boutique
 		</h1>
 	</div>
-	<div class="row gray-text ms-5">
+	<div class="row gray-text ms-5 text-sm">
 		<p class="ms-4">Le jeu-concours est 100% gagnant, pour participer :</p>
 		<ul class="liste-style">
 			<li>Inscrivez vous</li>
@@ -30,7 +30,7 @@
 	</div>
 </section>
 
-<div class="inscription-banner"><a href="/sign-up">Je m'inscris</a></div>
+<div class="inscription-banner"><a href="/register">Je m'inscris</a></div>
 
 <section class="container">
 	<div class="m-5 row text-center">
@@ -59,15 +59,22 @@
 	</div>
 	<div class="row">
 		{#each data.gains as gain}
-			<div class="p-3 gain-grid col-12 col-md-6 col-lg-4 text-center">
-				<!-- <p>{gain.title}</p> -->
+			<div class="p-3 gain-grid col-12 col-md-6 col-lg-4 text-center position-relative">
 				<!-- <img width="300px" height="300px" alt={gain.title} src={gain.imageUrl} /> -->
-				<img width="300px" height="300px" alt={gain.title} src={defaultGainImage} />
+				<img
+					width="300px"
+					height="300px"
+					alt={gain.title}
+					src={defaultGainImage}
+					class="img-fluid "
+				/>
+				<div class="gain-title position-absolute top-50 start-50 translate-middle text-white d-none">
+					<p>{gain.title}</p>
+				</div>
 			</div>
 		{/each}
 	</div>
 </section>
-
 <style>
 	.inscription-banner {
 		height: 3.2rem;
@@ -103,5 +110,8 @@
 		font-style: normal;
 		text-align: left;
 		color: #707070;
+	}
+	.position-relative:hover .gain-title  {
+		display: block;
 	}
 </style>
