@@ -9,7 +9,7 @@
 // export const prerender = true;
 import { apiClient } from '$services/apiClient';
 import { addCookie, SESSION_COOKIE_AGE, SESSION_COOKIE_NAME } from '$services/cookieUtils';
-import { redirect } from '@sveltejs/kit';
+import { redirect, fail } from '@sveltejs/kit';
 
 export const load = async ({ locals }) => {
 	// load;
@@ -24,9 +24,15 @@ export const actions = {
 		const data = await request.formData();
 		const email = data.get('email');
 		const password = data.get('password');
-		const { accessToken } = await apiClient.post(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, {
-			payload: { email: email, password: password }
-		});
+		const { accessToken, errorMessage } = await apiClient.post(
+			`${import.meta.env.VITE_API_BASE_URL}/auth/login`,
+			{
+				payload: { email: email, password: password }
+			}
+		);
+		if (errorMessage) {
+			return fail(400);
+		}
 		addCookie(cookies, SESSION_COOKIE_NAME, accessToken, SESSION_COOKIE_AGE);
 		return { success: true };
 	}

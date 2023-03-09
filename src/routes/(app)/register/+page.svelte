@@ -4,6 +4,12 @@
 	import { field, form } from 'svelte-forms';
 	import { between, email as emailValidator, required } from 'svelte-forms/validators';
 
+	let backValidationErrors = {};
+
+	function removeBackError(fieldName) {
+		backValidationErrors[fieldName] = '';
+	}
+
 	function checkPasswordsEquality() {
 		return (value) => {
 			return { valid: value === $password.value, name: 'confirm_password_does_not_match' };
@@ -50,10 +56,22 @@
 				firstName: $firstName.value,
 				lastName: $lastName.value
 			};
-			await apiClient.postWithRedirect(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, {
+			const response = await apiClient.post(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, {
 				payload: formData
 			});
-			window.location.href = '/login?registration=success';
+			if (response.status === 'Success') {
+				window.location.href = '/login?registration=success';
+				return;
+			}
+
+			if (response.status === 'Failure' && response.errors && response.errors.length !== 0) {
+				backValidationErrors = {};
+				response.errors.forEach(
+					(error) => (backValidationErrors[error.field] = error.defaultMessage)
+				);
+			}
+
+			await registrationForm.validate();
 		}
 	}
 </script>
@@ -118,15 +136,25 @@
 		<div class="form-floating">
 			<input
 				type="email"
-				class="form-control {!$email.valid && 'is-invalid'}"
+				class="form-control {!$email.valid || backValidationErrors.email ? 'is-invalid' : ''}"
 				id="floatingEmail"
 				placeholder="mail@exemple.fr"
 				bind:value={$email.value}
+				on:input={() => removeBackError('email')}
 			/>
-			<label class={!$email.valid && 'text-danger'} for="floatingEmail">
-				{$registrationForm.hasError('email.required') ? messageErrors.email.required : ''}
-				{$registrationForm.hasError('email.not_an_email') ? messageErrors.email.not_an_email : ''}
-				{!$registrationForm.hasError('email.required') &&
+			<label
+				class={(!$email.valid || backValidationErrors.email) && 'text-danger'}
+				for="floatingEmail"
+			>
+				{backValidationErrors.email ? backValidationErrors.email : ''}
+				{!backValidationErrors.email && $registrationForm.hasError('email.required')
+					? messageErrors.email.required
+					: ''}
+				{!backValidationErrors.email && $registrationForm.hasError('email.not_an_email')
+					? messageErrors.email.not_an_email
+					: ''}
+				{!backValidationErrors.email &&
+				!$registrationForm.hasError('email.required') &&
 				!$registrationForm.hasError('email.not_an_email')
 					? 'E-mail'
 					: ''}
