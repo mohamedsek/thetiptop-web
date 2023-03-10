@@ -8,7 +8,7 @@
 		"test": "playwright test",
 		"test:unit": "vitest --watch",
 		"test:unit:ci": "vitest",
-		"test:unit:coverage":"vitest --coverage.enabled --coverage.provider=c8 --coverage.reporter=cobertura --coverage.all --coverage.include=src",
+		"test:unit:coverage": "vitest --coverage.enabled --coverage.provider=c8 --coverage.reporter=cobertura --coverage.all --coverage.include=src",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
@@ -26,12 +26,15 @@
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
 		"svelte": "^3.54.0",
+		"svelte-preprocess": "^5.0.1",
+		"typescript": "^4.9.5",
 		"vite": "^4.0.0",
 		"vitest": "^0.25.3"
 	},
 	"type": "module",
 	"dependencies": {
 		"bootstrap": "^5.2.3",
+		"chart.js": "^4.2.1",
 		"svelte-forms": "^2.3.1"
 	}
 }

@@ -1,9 +1,38 @@
 <script>
-    import BoFooter from "$lib/components/backoffice/BoFooter.svelte";
-    import BoHeader from "$lib/components/backoffice/BoHeader.svelte";
+    import Footer from "$lib/components/backoffice/Footer.svelte";
+    import Header from "$lib/components/backoffice/Header.svelte";
+    import 'bootstrap/dist/css/bootstrap.min.css';
+    import '$lib/css/reset.css';
+    import '$lib/css/normalize.css';
+    import '$lib/css/app-styles.css';
+
+	export let data;
 </script>
 
+<div class="backoffice">
+	<Header props={data}/>
+	<main>
+		<slot />
+	</main>
+	<Footer />
+</div>
 
-<BoHeader></BoHeader>
-    <slot/>
-<BoFooter></BoFooter>
+
+<style>
+	.backoffice {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+
+	main {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		padding: 1rem;
+		
+		max-width: 64rem;
+		margin: 0 auto;
+		box-sizing: border-box;
+	}
+</style>
