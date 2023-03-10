@@ -8,7 +8,7 @@
 	let targetDistribution = [];
 	let currentDistribution = [];
 	onMount(async () => {
-		const response = await fetch('http://localhost:8080/gains/stats');
+		const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/gains/stats`);
 		console.log(response);
 
 		DistData = await response.json();
