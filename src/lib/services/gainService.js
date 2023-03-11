@@ -18,10 +18,11 @@ const _participate = async (accessToken, ticketCode) => {
         `${baseUrl}/tickets/gain`,
         { token: accessToken, payload: ticketCode }
     );
-    if (askForGainRes) {
-        return true;
+    
+    if (askForGainRes.error) {
+        return false;
     }
-    return false;
+    return true;
 }
 
 const gainService = {
