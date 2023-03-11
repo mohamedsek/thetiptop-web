@@ -10,9 +10,11 @@
 
 	let userGains = data.userGains;
 	let backendValid = true;
+	let showSuccess = false;
 
 	async function handleSubmit(event) {
 		backendValid = true;
+		showSuccess = false;
 		await participationForm.validate();
 
 		if ($participationForm.valid) {
@@ -22,7 +24,8 @@
 
 			const ticketOk = await gainService.participate(data.accessToken, ticketForm);
 			if (ticketOk) {
-				
+				participationForm.reset();
+				showSuccess = true;
 				userGains = await gainService.getUserGains(data.accessToken);
 			} else {
 				backendValid = false;
@@ -40,7 +43,7 @@
 	}
 
 	const ticketCodeField = field('code', '', [required(), pattern(ticketPattern), checkBackend()], {
-		stopAtFirstError: false
+		stopAtFirstError: true
 	});
 
 	const participationForm = form(ticketCodeField);
@@ -68,7 +71,7 @@
 	</article>
 	<article class="row justify-content-center">
 		<div class="col-md-10">
-			<h2 class="text-center fw-bold fs-4 mb-5">
+			<h2 class="text-center fw-bold fs-4 my-5">
 				Vous avez déjà un code? <br />entrez le ci-dessous et découvrez votre gains !
 			</h2>
 
@@ -87,6 +90,9 @@
 						<div id="ticketValidationFeedback" class="invalid-feedback">
 							Code ticket incorrect, vérifier votre saisie.
 						</div>
+						{#if showSuccess && $participationForm.valid}
+							<p class="text-success mt-2">Félicitation! consulter votre gain ci-dessous.</p>
+						{/if}
 					</div>
 					<div class="col-4">
 						<button type="submit" class="btn btn-lg form-control btn-participate">Participer</button
