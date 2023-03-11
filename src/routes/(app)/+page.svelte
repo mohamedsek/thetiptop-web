@@ -30,7 +30,13 @@
 	</div>
 </section>
 
-<div class="inscription-banner"><a href="/register">Je m'inscris</a></div>
+<div class="inscription-banner">
+	{#if data?.user}
+		<a href="/participer">Je participe</a>
+	{:else}
+		<a href="/register">Je m'inscris</a>
+	{/if}
+</div>
 
 <section class="container">
 	<div class="m-5 row text-center">
