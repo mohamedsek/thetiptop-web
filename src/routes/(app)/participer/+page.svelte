@@ -1,37 +1,23 @@
 <script>
-	import * as api from '$lib/services/api.js';
+	import gainService from '$lib/services/gainService';
 
-	let userGains = [];
+	/** @type {import('./$types').PageData} */
+	export let data;
 
-	const participate = async (event) => {
+	let userGains = data.userGains;
+
+	async function handleSubmit(event) {
 		const formData = new FormData(event.target);
 
 		let ticketCode = {
 			code: formData.get('code')
 		};
 
-		console.log(ticketCode);
-
-		// TODO remove Token from call params
-		let askForGainRes = await api.post(
-			'/tickets/gain',
-			ticketCode,
-			'injectToken'
-		);
-		if (askForGainRes.ok) {
-			// reload user's gains
-			// TODO remove Token from call params
-			let userGainsRes = await api.get(
-				'/tickets/user',
-				'injectToken'
-			);
-
-			if (userGainsRes.ok) {
-				userGains = await userGainsRes.json();
-				console.log(userGains);
-			}
+		const ticketOk = await gainService.participate(data.accessToken, ticketCode);
+		if (ticketOk) {
+			userGains = await gainService.getUserGains(data.accessToken);
 		}
-	};
+	}
 </script>
 
 <div class="d-flex justify-content-center">
@@ -53,7 +39,7 @@
 	Vous avez déjà un code? <br />entrez le ci-dessous et découvrez votre gains !
 </h2>
 
-<form class="row mb-5" method="POST" on:submit|preventDefault={participate}>
+<form class="row mb-5" method="POST" on:submit|preventDefault={handleSubmit}>
 	<div class="col-auto">
 		<input
 			type="text"
