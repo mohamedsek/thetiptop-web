@@ -2,23 +2,48 @@
 	import mainHomePageImage from '$lib/assets/home/tea_home_page.png';
 	import gainService from '$lib/services/gainService';
 
+	import { field, form } from 'svelte-forms';
+	import { pattern, required } from 'svelte-forms/validators';
+
 	/** @type {import('./$types').PageData} */
 	export let data;
 
 	let userGains = data.userGains;
+	let backendValid = true;
 
 	async function handleSubmit(event) {
-		const formData = new FormData(event.target);
+		backendValid = true;
+		await participationForm.validate();
 
-		let ticketCode = {
-			code: formData.get('code')
-		};
+		if ($participationForm.valid) {
+			let ticketForm = {
+				code: $ticketCodeField.value
+			};
 
-		const ticketOk = await gainService.participate(data.accessToken, ticketCode);
-		if (ticketOk) {
-			userGains = await gainService.getUserGains(data.accessToken);
+			const ticketOk = await gainService.participate(data.accessToken, ticketForm);
+			if (ticketOk) {
+				
+				userGains = await gainService.getUserGains(data.accessToken);
+			} else {
+				backendValid = false;
+				await participationForm.validate();
+			}
 		}
 	}
+
+	const ticketPattern = /^[0-9]{5}\-[0-9]{5}$/;
+
+	function checkBackend() {
+		return async (value) => {
+			return { valid: backendValid, name: 'invalid_code' };
+		};
+	}
+
+	const ticketCodeField = field('code', '', [required(), pattern(ticketPattern), checkBackend()], {
+		stopAtFirstError: false
+	});
+
+	const participationForm = form(ticketCodeField);
 </script>
 
 <div class="d-flex justify-content-center mb-5">
@@ -52,15 +77,20 @@
 					<div class="col">
 						<input
 							type="text"
-							class="form-control form-control-lg"
+							class="form-control form-control-lg {!$ticketCodeField.valid && 'is-invalid'}"
 							id="ticket-code-input"
 							placeholder="Entrer votre code"
-							name="code"
-							width="100%"
+							aria-describedby="ticketValidationFeedback"
+							bind:value={$ticketCodeField.value}
 						/>
+
+						<div id="ticketValidationFeedback" class="invalid-feedback">
+							Code ticket incorrect, vérifier votre saisie.
+						</div>
 					</div>
 					<div class="col-4">
-						<button type="submit" class="btn btn-lg form-control btn-participate">Participer</button>
+						<button type="submit" class="btn btn-lg form-control btn-participate">Participer</button
+						>
 					</div>
 				</form>
 			</div>
