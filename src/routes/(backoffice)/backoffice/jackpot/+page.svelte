@@ -1,22 +1,18 @@
 <script>
 	import { onMount } from 'svelte';
+
+	/** @type {import('./$types').PageData} */
+	export let data;
+
 	let Winner = null;
 	let isLoading = false;
+	let JackPot = data.JackPot;
 
 	async function getWinner() {
 		isLoading = true;
-		const options = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({})
-		};
-		const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/tickets/jackpot`, options);
-		let data = await response.json();
-		console.log(Winner);
+		console.log(JackPot);
 		setTimeout(() => {
-			Winner = data;
+			Winner = JackPot;
 			isLoading = false;
 		}, 5000);
 	}
