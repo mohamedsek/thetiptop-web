@@ -2,7 +2,14 @@ import { apiClient } from '$services/apiClient';
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const _getUserGains = async (accessToken) => {
-    // TODO impelment
+    let userGainsRes = await apiClient.get(
+        `${baseUrl}/tickets/user`,
+        { token: accessToken }
+    );
+
+    if (userGainsRes) {
+        return userGainsRes;
+    }
     return [];
 }
 
