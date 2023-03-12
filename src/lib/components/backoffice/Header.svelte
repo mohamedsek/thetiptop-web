@@ -39,51 +39,22 @@
 					<!-- <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> -->
 
 					<ul class="navbar-nav justify-content-center col-xs-12 ms-auto">
-						<li class="text-center" aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-							<a
-								href="/"
-								class="nav-link px-2 {$page.url.pathname === '/' ? 'link-secondary' : 'link-dark'}"
-								>Acceuil</a
-							>
+						<li class="text-center">
+							<a href="/backoffice" class="nav-link px-2 link-dark">Accueil</a>
 						</li>
 
-						{#if props?.user}
-							<li class="text-center">
-								<a href="/backoffice/stats" class="nav-link px-2 link-dark">statistiques</a>
-							</li>
-						{:else}
-							<li class="text-center">
-								<a href="/#jeux-concours" class="nav-link px-2 link-dark">Le jeu-concours</a>
-							</li>
-						{/if}
-						{#if props?.user}
-							<li class="text-center">
-								<a href="/backoffice/jackpot" class="nav-link px-2 link-dark">Jackpot</a>
-							</li>
-						{:else}
-							<li class="text-center">
-								<a href="/#lot-a-gagner" class="nav-link px-2 link-dark">Les gains</a>
-							</li>
-						{/if}
+						<li class="text-center">
+							<a href="/backoffice/stats" class="nav-link px-2 link-dark">statistiques</a>
+						</li>
 
-						{#if props?.user}
-							<!-- {props?.user.firstName} -->
-							<li class="text-center">
-								<a href="/auth/logout" class="nav-link px-2 link-dark">Se déconnecter</a>
-							</li>
-						{:else}
-							<li
-								class="text-center"
-								aria-current={$page.url.pathname === '/login' ? 'page' : undefined}
-							>
-								<a
-									href="/login"
-									class="nav-link px-2 {$page.url.pathname === '/login'
-										? 'link-secondary'
-										: 'link-dark'}">Connexion</a
-								>
-							</li>
-						{/if}
+						<li class="text-center">
+							<a href="/backoffice/jackpot" class="nav-link px-2 link-dark">Jackpot</a>
+						</li>
+
+						<!-- {props?.user.firstName} -->
+						<li class="text-center">
+							<a href="/auth/logout" class="nav-link px-2 link-dark">Se déconnecter</a>
+						</li>
 					</ul>
 				</div>
 			</div>
