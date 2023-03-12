@@ -14,7 +14,7 @@ import { redirect, fail } from '@sveltejs/kit';
 export const load = async ({ locals }) => {
 	// load;
 	if (locals?.user) {
-		if (locals.user.role.name === 'ADMIN') {
+		if (locals?.user?.role?.name === 'ADMIN') {
 			throw redirect(303, '/backoffice');
 		}
 		throw redirect(303, '/');
