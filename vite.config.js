@@ -16,16 +16,9 @@ export default ({ mode }) => {
 		},
 		test: {
 			include: ['src/**/*.{test,spec}.{js,ts}'],
+			reporters:'junit',
+			outputFile: './unit-test-results/junit.xml',
 			watch: false
-		},
-		server: {
-			proxy: {
-				'/api/': {
-					target: env.VITE_API_BASE_URL,
-					changeOrigin: true,
-					rewrite: (path) => path.replace(/^\/api/, '')
-				}
-			}
 		}
 	});
 };

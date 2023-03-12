@@ -23,7 +23,13 @@ pipeline {
                     BUILD_IMAGE = docker.build(BUILD_IMAGE_NAME, '-f Dockerfile.test .')
                     // Run unit tests with vitest
                     BUILD_IMAGE.inside {
-                        sh 'cd /usr/src/app && npm run test:unit:ci'
+                        sh 'npm i'
+                        sh 'npm run test:unit:coverage'
+                        sh 'pwd'
+                        sh 'ls -al'
+                        sh 'ls -al ./unit-test-results'
+                        junit(testResults: 'unit-test-results/junit.xml', allowEmptyResults : true)
+                        publishCoverage adapters: [coberturaAdapter('coverage/cobertura-coverage.xml')]
                     }
                 }
             }
@@ -34,7 +40,12 @@ pipeline {
                 script {
                     // Run playwright tests
                     BUILD_IMAGE.inside {
-                        sh 'cd /usr/src/app && npm run test'
+                         sh 'npm i'
+                        sh 'npm run test'
+                        sh 'pwd'
+                        sh 'ls -al'
+                        sh 'ls -al ./unit-test-results'
+                        junit(testResults: 'e2etests-results/junit.xml', allowEmptyResults : true)
                     }
                 }
             }
