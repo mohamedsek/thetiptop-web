@@ -1,6 +1,7 @@
 <script>
     import Footer from "$lib/components/backoffice/Footer.svelte";
     import Header from "$lib/components/backoffice/Header.svelte";
+	import CookiePolicy from "$lib/components/CookiePolicy/CookiePolicy.svelte"
     import 'bootstrap/dist/css/bootstrap.min.css';
     import '$lib/css/reset.css';
     import '$lib/css/normalize.css';
@@ -14,6 +15,7 @@
 	<main>
 		<slot />
 	</main>
+	<CookiePolicy/>
 	<Footer />
 </div>
 

@@ -1,6 +1,7 @@
 <script>
 	import '$lib/css/reset.css';
 	import '$lib/css/normalize.css';
+	import CookiePolicy from '../../lib/components/CookiePolicy/CookiePolicy.svelte';
 	// import 'bootstrap/dist/js/bootstrap.min.js';
 	import 'bootstrap/dist/css/bootstrap.min.css';
 	import '$lib/css/app-styles.css';
@@ -15,6 +16,7 @@
 	<main>
 		<slot />
 	</main>
+	<CookiePolicy/>
 	<Footer />
 </div>
 
