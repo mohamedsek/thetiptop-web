@@ -23,4 +23,4 @@
 	});
 </script>
 
-<canvas id="myChart" height="700px" width="700px"/>
+<canvas id="myChart" height="600px" width="600px"/>
