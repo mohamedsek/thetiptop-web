@@ -32,14 +32,14 @@
 				labels: labels,
 				datasets: [
 					{
-						label: 'current Distribution',
+						label: '% actuel des gagnants',
 						data: currentDistribution,
 						backgroundColor: ['rgba(0, 128, 0, 0.5)'],
 						borderColor: ['rgb(0, 128, 0)'],
 						borderWidth: 1
 					},
 					{
-						label: 'target Distribution',
+						label: '% cible des gagnants',
 						data: targetDistribution,
 						backgroundColor: ['rgba(255, 153, 0, 0.5)'],
 						borderColor: ['rgb(255, 99, 132)'],
@@ -85,7 +85,7 @@
 
 <style>
 	.stats {
-		display: flex;
+		
 		flex-direction: column;
 		margin-bottom: 100px;
 		padding-bottom: 20px;
