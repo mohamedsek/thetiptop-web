@@ -47,13 +47,24 @@
 							>
 						</li>
 
-						<li class="text-center">
-							<a href="/#jeux-concours" class="nav-link px-2 link-dark">Le jeu-concours</a>
-						</li>
-
-						<li class="text-center">
-							<a href="/#lot-a-gagner" class="nav-link px-2 link-dark">Les gains</a>
-						</li>
+						{#if props?.user}
+							<li class="text-center">
+								<a href="/backoffice/stats" class="nav-link px-2 link-dark">statistiques</a>
+							</li>
+						{:else}
+							<li class="text-center">
+								<a href="/#jeux-concours" class="nav-link px-2 link-dark">Le jeu-concours</a>
+							</li>
+						{/if}
+						{#if props?.user}
+							<li class="text-center">
+								<a href="/backoffice/jackpot" class="nav-link px-2 link-dark">Jackpot</a>
+							</li>
+						{:else}
+							<li class="text-center">
+								<a href="/#lot-a-gagner" class="nav-link px-2 link-dark">Les gains</a>
+							</li>
+						{/if}
 
 						{#if props?.user}
 							<!-- {props?.user.firstName} -->
@@ -70,17 +81,6 @@
 									class="nav-link px-2 {$page.url.pathname === '/login'
 										? 'link-secondary'
 										: 'link-dark'}">Connexion</a
-								>
-							</li>
-							<li
-								class="text-center"
-								aria-current={$page.url.pathname === '/register' ? 'page' : undefined}
-							>
-								<a
-									href="/register"
-									class="nav-link px-2 {$page.url.pathname === '/register'
-										? 'link-secondary'
-										: 'link-dark'}">Inscription</a
 								>
 							</li>
 						{/if}
