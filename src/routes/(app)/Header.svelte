@@ -60,6 +60,11 @@
 							<li class="text-center">
 								<a href="/auth/logout" class="nav-link px-2 link-dark">Se déconnecter</a>
 							</li>
+							{#if props.user.role.name === 'ADMIN'}
+								<li class="text-center">
+								<a href="/backoffice/stats" class="nav-link px-2 link-dark">Back Office</a>
+							</li>
+							{/if}
 						{:else}
 							<li
 								class="text-center"
