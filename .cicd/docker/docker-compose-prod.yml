@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     labels:
       - traefik.enable=true
-      - traefik.http.routers.web-thetiptop.rule=Host(`web.dsp-archiwebf22-at-sb-ms.fr`)
+      - traefik.http.routers.web-thetiptop.rule=Host(`prod.web.dsp-archiwebf22-at-sb-ms.fr`)
       - traefik.http.routers.web-thetiptop.entrypoints=websecure
       - traefik.http.services.web-thetiptop.loadbalancer.server.port=3000
     networks:
