@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/stores';
+	import userProfielSvg from '$lib/assets/home/profile-user.svg';
 	import logoDesktop from '$lib/assets/logo_desktop.png';
 	import logoMobile from '$lib/assets/logo_mobile.png';
 
@@ -21,7 +22,13 @@
 						href="/"
 						class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
 					>
-						<img class="logo d-none d-md-block" src={logoDesktop} alt="Logo" />
+						<img
+							class="logo d-none d-md-block"
+							width="184"
+							height="72"
+							src={logoDesktop}
+							alt="Logo"
+						/>
 						<img class="logo d-md-none" src={logoMobile} alt="Logo" />
 					</a>
 				</div>
@@ -55,10 +62,27 @@
 							<a href="/#lot-a-gagner" class="nav-link px-2 link-dark">Les gains</a>
 						</li>
 
+						<li class="text-center d-lg-none">
+							<a class="nav-link px-2 link-dark" href="/profile">Mon compte</a>
+						</li>
+						<li class="text-center d-lg-none">
+							<a class="nav-link px-2 link-dark" href="/participer">Je participe</a>
+						</li>
+						<li class="text-center d-lg-none">
+							<a class="nav-link px-2 link-dark" href="/auth/logout">Se déconnecter</a>
+						</li>
+
 						{#if props?.user}
 							<!-- {props?.user.firstName} -->
-							<li class="text-center">
-								<a href="/auth/logout" class="nav-link px-2 link-dark">Se déconnecter</a>
+							<li class="text-center d-none d-lg-block">
+								<div class="dropdown-container nav-link px-2  " style="position: relative;">
+									<img src={userProfielSvg} alt="Profile" />
+									<ul class="dropdown-menu">
+										<li><a href="/profile">Mon compte</a></li>
+										<li><a href="/participer">Je participe</a></li>
+										<li><a href="/auth/logout">Se déconnecter</a></li>
+									</ul>
+								</div>
 							</li>
 							{#if props?.user?.role?.name === 'ADMIN'}
 								<li class="text-center">
@@ -102,5 +126,30 @@
 		width: auto;
 		max-height: 72px;
 		max-width: 250px;
+	}
+
+	.dropdown-menu {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		background-color: #fff;
+		padding: 0;
+		display: none;
+	}
+
+
+	.dropdown-menu a {
+		display: block;
+		padding: 10px 15px;
+		text-decoration: none;
+		color: #333;
+	}
+
+	.dropdown-menu a:hover {
+		background-color: #f5f5f5;
+	}
+	.dropdown-container:hover .dropdown-menu {
+		display: block;
+		left: calc(-1 * 200%);
 	}
 </style>

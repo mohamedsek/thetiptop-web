@@ -18,6 +18,12 @@
 		};
 	}
 
+	function checked() {
+		return (value) => {
+			return { valid: !!value, name: 'checked' };
+		};
+	}
+
 	function alpha() {
 		const pattern = /^[a-zA-Z]+$/;
 
@@ -45,7 +51,23 @@
 		stopAtFirstError: true
 	});
 
-	const registrationForm = form(email, password, confirmPassword, firstName, lastName);
+	const acceptRgpd = field('acceptRgpd', false, [checked()], {
+		stopAtFirstError: true
+	});
+
+	const acceptNewsLetter = field('acceptNewsLetter', false, [], {
+		stopAtFirstError: true
+	});
+
+	const registrationForm = form(
+		email,
+		password,
+		confirmPassword,
+		firstName,
+		lastName,
+		acceptRgpd,
+		acceptNewsLetter
+	);
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -215,6 +237,40 @@
 					</label>
 				</div>
 			</div>
+			<div class="mb-3 small lh-sm">
+				<div
+					class="{$registrationForm.hasError('acceptRgpd.checked')
+						? ''
+						: 'd-none'} small mb-1 text-danger rgpd-required"
+				>
+					* Vous devez confirmer que vous avez lu et que vous acceptez nos CGU et notre politique de
+					confidentialité.
+				</div>
+				<input
+					class="d-inline me-2"
+					id="acceptRgpd-checkbox"
+					type="checkbox"
+					bind:checked={$acceptRgpd.value}
+				/>
+				<label class="d-inline" for="acceptRgpd-checkbox">
+					J'ai lu et j'accepte les Conditions Générales d'Utilisation ainsi que la Politique de
+					confidentialité
+				</label>
+			</div>
+			<div class="mb-3 small lh-sm">
+				<input
+					class="d-inline me-2"
+					id="acceptNewsLetter-checkbox"
+					type="checkbox"
+					bind:checked={$acceptNewsLetter.value}
+				/>
+				<label class="d-inline" for="acceptNewsLetter-checkbox">
+					Je souhaite recevoir par email la newsletter Thétiptop pour être averti(e) en
+					avant-première de l'arrivée de nouveaux thés, profiter d'offres spéciales ou obtenir des
+					conseils sur le thé
+				</label>
+			</div>
+
 			<div class="btn-wrapper d-flex justify-content-center mb-4">
 				<button type="submit" disabled={!$registrationForm.valid} class="btn-signup  ">
 					S'inscrire
