@@ -8,8 +8,7 @@ const addCookie = (cookies, name, value, age) => {
 	});
 };
 
-// todo extract maxAge and cookie name to env variable
-const SESSION_COOKIE_NAME = 'ttt_session';
-const SESSION_COOKIE_AGE = 60 * 30;
+const SESSION_COOKIE_NAME = import.meta.env.VITE_COOKIE_NAME;
+const SESSION_COOKIE_AGE = import.meta.env.VITE_COOKIE_MAX_AGE;
 
 export { addCookie, SESSION_COOKIE_NAME, SESSION_COOKIE_AGE };

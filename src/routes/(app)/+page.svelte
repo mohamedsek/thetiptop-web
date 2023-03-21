@@ -1,6 +1,7 @@
 <script>
 	import mainHomePageImage from '$lib/assets/home/tea_home_page.png';
 	import defaultGainImage from '$lib/assets/home/default_gain_image.png';
+	import enveloppeSvg from '$lib/assets/home/enveloppe.svg';
 
 	export let data;
 </script>
@@ -74,13 +75,41 @@
 					src={defaultGainImage}
 					class="img-fluid "
 				/>
-				<div class="gain-title position-absolute top-50 start-50 translate-middle text-white d-none">
+				<div
+					class="gain-title position-absolute top-50 start-50 translate-middle text-white d-none"
+				>
 					<p>{gain.title}</p>
 				</div>
 			</div>
 		{/each}
 	</div>
 </section>
+<section id="newsLetter" class="container mb-5 p-4  ">
+	<h3 class="mb-4 text-center"><strong>Votre boite mail</strong> remplie de saveurs</h3>
+	<div class="row">
+		<p class="text-center">
+			Tenez-vous informé(e) de l'actualité et des événements de Thétiptop en vous abonnant à notre
+			newsletter
+		</p>
+		<!-- <div class=""><img src={enveloppeSvg} alt="" /></div> -->
+		<div class="input-group mb-3 mt-4 myInput">
+			<input
+				type="text"
+				class="form-control"
+				placeholder="Enter email"
+				aria-label="Recipient's username"
+				aria-describedby="button-addon2"
+			/>
+			<button class="btn btn-success border-rad" type="button" id="button-addon2">Subscribe</button>
+		</div>
+		<p class="text-center lh-lg">
+			En cliquant sur « INSCRIPTION », vous acceptez expressément de recevoir les offres
+			commerciales et les actualités de Thétiptop par email selon les conditions suivantes et
+			conformément à notre Politique de Confidentialité disponible <a href="">ici</a>.
+		</p>
+	</div>
+</section>
+
 <style>
 	.inscription-banner {
 		height: 3.2rem;
@@ -117,7 +146,11 @@
 		text-align: left;
 		color: #707070;
 	}
-	.position-relative:hover .gain-title  {
+	.position-relative:hover .gain-title {
 		display: block;
+	}
+	.myInput {
+		max-width: 70%;
+		margin: 0 auto;
 	}
 </style>
