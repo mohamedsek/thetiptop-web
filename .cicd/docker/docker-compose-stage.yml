@@ -6,6 +6,7 @@ networks:
 
 services:
   web-thetiptop-stage:
+    container_name: "fr.dsp.thetiptop.web-release"
     image: registry.dsp-archiwebf22-at-sb-ms.fr/pfe/thetiptop-web-release:latest
     restart: unless-stopped
     labels:

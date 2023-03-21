@@ -6,6 +6,7 @@ networks:
 
 services:
   web-thetiptop-dev:
+    container_name: "fr.dsp.thetiptop.web-dev"
     image: registry.dsp-archiwebf22-at-sb-ms.fr/pfe/thetiptop-web-develop:latest
     restart: unless-stopped
     labels:
