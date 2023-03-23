@@ -62,20 +62,19 @@
 							<a href="/#lot-a-gagner" class="nav-link px-2 link-dark">Les gains</a>
 						</li>
 
-						<li class="text-center d-lg-none">
-							<a class="nav-link px-2 link-dark" href="/profile">Mon compte</a>
-						</li>
-						<li class="text-center d-lg-none">
-							<a class="nav-link px-2 link-dark" href="/participer">Je participe</a>
-						</li>
-						<li class="text-center d-lg-none">
-							<a class="nav-link px-2 link-dark" href="/auth/logout">Se déconnecter</a>
-						</li>
-
 						{#if props?.user}
+							<li class="text-center d-lg-none">
+								<a class="nav-link px-2 link-dark" href="/profile">Mon compte</a>
+							</li>
+							<li class="text-center d-lg-none">
+								<a class="nav-link px-2 link-dark" href="/participer">Je participe</a>
+							</li>
+							<li class="text-center d-lg-none">
+								<a class="nav-link px-2 link-dark" href="/auth/logout">Se déconnecter</a>
+							</li>
 							<!-- {props?.user.firstName} -->
 							<li class="text-center d-none d-lg-block">
-								<div class="dropdown-container nav-link px-2  " style="position: relative;">
+								<div class="dropdown-container nav-link px-2 " style="position: relative;">
 									<img src={userProfielSvg} alt="Profile" />
 									<ul class="dropdown-menu">
 										<li><a href="/profile">Mon compte</a></li>
@@ -86,8 +85,8 @@
 							</li>
 							{#if props?.user?.role?.name === 'ADMIN'}
 								<li class="text-center">
-								<a href="/backoffice/stats" class="nav-link px-2 link-dark">Back Office</a>
-							</li>
+									<a href="/backoffice/stats" class="nav-link px-2 link-dark">Back Office</a>
+								</li>
 							{/if}
 						{:else}
 							<li
@@ -136,7 +135,6 @@
 		padding: 0;
 		display: none;
 	}
-
 
 	.dropdown-menu a {
 		display: block;
