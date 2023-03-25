@@ -4,6 +4,7 @@
 import { apiClient } from '$services/apiClient';
 import gainsMock from '../../lib/mocks/gainsMock';
 
+
 // export const prerender = true;
 /** @type {import('./$types').PageLoad} */
 export const load = async ({ locals, parent }) => {
@@ -19,11 +20,11 @@ export const load = async ({ locals, parent }) => {
 
 async function getGains() {
 
-	if (import.meta.env.ENV_NAME == "test") {
-		return gainsMock;
+	if (import.meta.env.VITE_API_BASE_URL) {
+		return await apiClient.get(`${import.meta.env.VITE_API_BASE_URL}/gains`);
 	}
 
-	const response = await apiClient.get(`${import.meta.env.VITE_API_BASE_URL}/gains`);
+	// when API_BASE_URL is empty we are in test mode
+	return gainsMock;
 
-	return response;
 }
