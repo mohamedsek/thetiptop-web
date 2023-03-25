@@ -29,7 +29,7 @@ export const apiClient = {
 		return (await fetchAPI(url, 'PUT', data)).json();
 	},
 	delete: async (url, data) => {
-		return await fetchAPI(url, 'DELETE', { accept: '*/*' });
+		return await fetchAPI(url, 'DELETE', data);
 	},
 	patch: async (url, data) => {
 		return (await fetchAPI(url, 'PATCH', data)).json();
