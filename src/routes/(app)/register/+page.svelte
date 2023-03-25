@@ -101,24 +101,25 @@
 </script>
 
 <svelte:head>
-	<title>Register</title>
-	<meta name="description" content="Register Page" />
+	<title>ThéTipTop - Inscription</title>
+	<meta name="description" content="Rejoignez la communauté ThéTipTop en vous inscrivant dès maintenant. Découvrez nos gammes de thés de grande qualité, ainsi que nos mélanges signatures exclusifs, des thés détox, des thés blancs, des thés aux légumes et des infusions. Tous nos thés sont bios et Handmades. En tant que membre, vous pourrez profiter d'une expérience de dégustation de thé unique et recevoir des avantages exclusifs. Inscrivez-vous dès maintenant pour commencer votre voyage avec ThéTipTop." />
 </svelte:head>
 
 <div class="container row  border rounded m-auto p-0">
 	<div class="left-banner  col-5 rounded-start d-none d-lg-flex ps-4">
 		<div class="lh-lg align-middle fs-5">
+			<h1>ThéTipTop</h1>
 			Bienvenue ! <br />
 			Veuillez vous inscrire en utilisant un compte Facebook , Google ou LinkedIn sinon vous pouvez utiliser
 			votre adresse mail.
 		</div>
 	</div>
 	<div class="form-container col-12 col-md-12 col-lg-7 ">
-		<h1 class="text-center fw-bold fs-3 mt-4">Inscription</h1>
+		<h2 class="text-center fw-bold fs-3 mt-4">Inscription</h2>
 		<div class="mb-4 mt-3 social-netowrks social-icons d-flex justify-content-center ">
 			<AuthSocialNetworks />
 		</div>
-		<h6 class="text-center fw-bold fs-4">Ou utiliser votre adresse mail</h6>
+		<h2 class="text-center fw-bold fs-4">Ou utiliser votre adresse mail</h2>
 		<form on:submit={handleSubmit} class="p-4">
 			<div class="mb-3 ">
 				<div class="form-floating">
