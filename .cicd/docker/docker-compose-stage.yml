@@ -6,11 +6,12 @@ networks:
 
 services:
   web-thetiptop-stage:
+    container_name: "fr.dsp.thetiptop.web-release"
     image: registry.dsp-archiwebf22-at-sb-ms.fr/pfe/thetiptop-web-release:latest
     restart: unless-stopped
     labels:
       - traefik.enable=true
-      - traefik.http.routers.web-thetiptop-stage.rule=Host(`web.stage.dsp-archiwebf22-at-sb-ms.fr`)
+      - traefik.http.routers.web-thetiptop-stage.rule=Host(`stage.web.dsp-archiwebf22-at-sb-ms.fr`)
       - traefik.http.routers.web-thetiptop-stage.entrypoints=websecure
       - traefik.http.services.web-thetiptop-stage.loadbalancer.server.port=3000
     networks:

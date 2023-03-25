@@ -7,11 +7,13 @@
 	import '$lib/css/app-styles.css';
 	import Footer from './Footer.svelte';
 	import Header from './Header.svelte';
+	import Analytics from '../../lib/components/Analytics.svelte';
 
 	export let data;
 </script>
 
 <div class="app">
+	<Analytics />
 	<Header props={data}/>
 	<main>
 		<slot />

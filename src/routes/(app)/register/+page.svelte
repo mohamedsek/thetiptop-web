@@ -18,6 +18,12 @@
 		};
 	}
 
+	function checked() {
+		return (value) => {
+			return { valid: !!value, name: 'checked' };
+		};
+	}
+
 	function alpha() {
 		const pattern = /^[a-zA-Z]+$/;
 
@@ -45,7 +51,23 @@
 		stopAtFirstError: true
 	});
 
-	const registrationForm = form(email, password, confirmPassword, firstName, lastName);
+	const acceptRgpd = field('acceptRgpd', false, [checked()], {
+		stopAtFirstError: true
+	});
+
+	const acceptNewsLetter = field('acceptNewsLetter', false, [], {
+		stopAtFirstError: true
+	});
+
+	const registrationForm = form(
+		email,
+		password,
+		confirmPassword,
+		firstName,
+		lastName,
+		acceptRgpd,
+		acceptNewsLetter
+	);
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -79,24 +101,25 @@
 </script>
 
 <svelte:head>
-	<title>Register</title>
-	<meta name="description" content="Register Page" />
+	<title>ThéTipTop - Inscription</title>
+	<meta name="description" content="Rejoignez la communauté ThéTipTop en vous inscrivant dès maintenant. Découvrez nos gammes de thés de grande qualité, ainsi que nos mélanges signatures exclusifs, des thés détox, des thés blancs, des thés aux légumes et des infusions. Tous nos thés sont bios et Handmades. En tant que membre, vous pourrez profiter d'une expérience de dégustation de thé unique et recevoir des avantages exclusifs. Inscrivez-vous dès maintenant pour commencer votre voyage avec ThéTipTop." />
 </svelte:head>
 
 <div class="container row  border rounded m-auto p-0">
 	<div class="left-banner  col-5 rounded-start d-none d-lg-flex ps-4">
 		<div class="lh-lg align-middle fs-5">
+			<h1>ThéTipTop</h1>
 			Bienvenue ! <br />
 			Veuillez vous inscrire en utilisant un compte Facebook , Google ou LinkedIn sinon vous pouvez utiliser
 			votre adresse mail.
 		</div>
 	</div>
 	<div class="form-container col-12 col-md-12 col-lg-7 ">
-		<h1 class="text-center fw-bold fs-3 mt-4">Inscription</h1>
+		<h2 class="text-center fw-bold fs-3 mt-4">Inscription</h2>
 		<div class="mb-4 mt-3 social-netowrks social-icons d-flex justify-content-center ">
 			<AuthSocialNetworks />
 		</div>
-		<h6 class="text-center fw-bold fs-4">Ou utiliser votre adresse mail</h6>
+		<h2 class="text-center fw-bold fs-4">Ou utiliser votre adresse mail</h2>
 		<form on:submit={handleSubmit} class="p-4">
 			<div class="mb-3 ">
 				<div class="form-floating">
@@ -215,6 +238,40 @@
 					</label>
 				</div>
 			</div>
+			<div class="mb-3 small lh-sm">
+				<div
+					class="{$registrationForm.hasError('acceptRgpd.checked')
+						? ''
+						: 'd-none'} small mb-1 text-danger rgpd-required"
+				>
+					* Vous devez confirmer que vous avez lu et que vous acceptez nos CGU et notre politique de
+					confidentialité.
+				</div>
+				<input
+					class="d-inline me-2"
+					id="acceptRgpd-checkbox"
+					type="checkbox"
+					bind:checked={$acceptRgpd.value}
+				/>
+				<label class="d-inline" for="acceptRgpd-checkbox">
+					J'ai lu et j'accepte les Conditions Générales d'Utilisation ainsi que la Politique de
+					confidentialité
+				</label>
+			</div>
+			<div class="mb-3 small lh-sm">
+				<input
+					class="d-inline me-2"
+					id="acceptNewsLetter-checkbox"
+					type="checkbox"
+					bind:checked={$acceptNewsLetter.value}
+				/>
+				<label class="d-inline" for="acceptNewsLetter-checkbox">
+					Je souhaite recevoir par email la newsletter Thétiptop pour être averti(e) en
+					avant-première de l'arrivée de nouveaux thés, profiter d'offres spéciales ou obtenir des
+					conseils sur le thé
+				</label>
+			</div>
+
 			<div class="btn-wrapper d-flex justify-content-center mb-4">
 				<button type="submit" disabled={!$registrationForm.valid} class="btn-signup  ">
 					S'inscrire
