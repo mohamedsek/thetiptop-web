@@ -49,6 +49,11 @@
 	const participationForm = form(ticketCodeField);
 </script>
 
+<svelte:head>
+	<title>ThéTipTop - Participer</title>
+	<meta name="description" content="ThéTipTop - Découvrez nos gammes de thés de très grande qualité, élaborées avec des mélanges signatures exclusifs, des thés détox, des thés blancs, des thés aux légumes et des infusions. Tous nos thés sont bios et Handmades. Savourez une expérience de dégustation unique avec ThéTipTop." />
+</svelte:head>
+
 <div class="d-flex justify-content-center mb-5">
 	<img src={mainHomePageImage} alt="thé" class="img-fluid rounded-3" width="100%" />
 </div>

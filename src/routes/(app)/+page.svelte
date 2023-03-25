@@ -7,8 +7,8 @@
 </script>
 
 <svelte:head>
-	<title>Page d'accueil</title>
-	<meta name="description" content="Thé-tip-top" />
+	<title>ThéTipTop - Accueil</title>
+	<meta name="description" content="ThéTipTop - Découvrez nos gammes de thés de très grande qualité, élaborées avec des mélanges signatures exclusifs, des thés détox, des thés blancs, des thés aux légumes et des infusions. Tous nos thés sont bios et Handmades. Savourez une expérience de dégustation unique avec ThéTipTop." />
 </svelte:head>
 
 <section class="container">
@@ -74,6 +74,7 @@
 					alt={gain.title}
 					src={defaultGainImage}
 					class="img-fluid "
+					title={gain.title}
 				/>
 				<div
 					class="gain-title position-absolute top-50 start-50 translate-middle text-white d-none"

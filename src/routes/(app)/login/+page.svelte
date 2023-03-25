@@ -48,8 +48,8 @@
 </script>
 
 <svelte:head>
-	<title>Login</title>
-	<meta name="description" content="Login Page" />
+	<title>ThéTipTop - Connexion</title>
+	<meta name="description" content="Connectez-vous à votre compte ThéTipTop pour profiter d'une expérience de dégustation de thé inégalée. En tant que membre, vous aurez accès à nos gammes de thés de grande qualité, ainsi qu'à nos mélanges signatures exclusifs, des thés détox, des thés blancs, des thés aux légumes et des infusions. Tous nos thés sont bios et Handmades. Connectez-vous dès maintenant pour accéder à notre sélection de thés et découvrir les avantages de ThéTipTop." />
 </svelte:head>
 
 <div class="container row  border rounded m-auto p-4 col-md-6">
