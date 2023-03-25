@@ -1,36 +1,16 @@
 // since there's no dynamic data here, we can prerender
 // it so that it gets served as a static asset in production
 
+import { apiClient } from '$services/apiClient';
+
 // export const prerender = true;
 /** @type {import('./$types').PageLoad} */
 export const load = async ({ locals, parent }) => {
 	await parent();
+
+	const response = await apiClient.get(`${import.meta.env.VITE_API_BASE_URL}/gains`);
+
 	return {
-		gains: [
-			{
-				title: 'title 1 ',
-				imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
-			},
-			{
-				title: 'title 2',
-				imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
-			},
-			{
-				title: 'title 3',
-				imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
-			},
-			{
-				title: 'title 4',
-				imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
-			},
-			{
-				title: 'title 5',
-				imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
-			},
-			{
-				title: 'title 6',
-				imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
-			}
-		]
+		gains: response
 	};
 };
