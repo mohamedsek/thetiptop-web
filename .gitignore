@@ -11,3 +11,6 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 coverage
 docker-compose.yml
+/unit-test-results
+/e2etests-results
+/coverage

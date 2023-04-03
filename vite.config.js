@@ -15,10 +15,11 @@ export default ({ mode }) => {
 			}
 		},
 		test: {
-			include: ['src/**/*.{test,spec}.{js,ts}'],
+			include: ['unit-integration-tests/**/*.{test,spec}.{js,ts}'],
 			reporters:'junit',
 			outputFile: './unit-test-results/junit.xml',
-			watch: false
+			watch: false,
+			environment: 'jsdom'
 		}
 	});
 };
