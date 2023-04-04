@@ -4,7 +4,7 @@
 const stats = [
     {
         "id": 2,
-        "title": "une boite de 100g d’un thé détox ou d’infusion",
+        "title": "une boite de 100g d'un thé détox ou d'infusion",
         "numberOfParticipatingByGain": 2,
         "totalParticipating": 10,
         "currentDistribution": 20.0,
@@ -12,7 +12,7 @@ const stats = [
     },
     {
         "id": 5,
-        "title": "un coffret découverte d’une valeur de 69€",
+        "title": "un coffret découverte d'une valeur de 69€",
         "numberOfParticipatingByGain": 1,
         "totalParticipating": 10,
         "currentDistribution": 10.0,
@@ -20,7 +20,7 @@ const stats = [
     },
     {
         "id": 4,
-        "title": "un coffret découverte d’une valeur de 39€",
+        "title": "un coffret découverte d'une valeur de 39€",
         "numberOfParticipatingByGain": 1,
         "totalParticipating": 10,
         "currentDistribution": 10.0,
@@ -28,7 +28,7 @@ const stats = [
     },
     {
         "id": 3,
-        "title": "une boite de 100g d’un thé signature",
+        "title": "une boite de 100g d'un thé signature",
         "numberOfParticipatingByGain": 1,
         "totalParticipating": 10,
         "currentDistribution": 10.0,
