@@ -111,7 +111,7 @@
 
 <h3 class="ttp-green text-center fs-2 fw-bold">MES GAINS</h3>
 <div class="gains-list border rounded text-center mt-3 pt-3 pb-4">
-	{#if !userGains.length}
+	{#if userGains && !userGains.length}
 		<p class="ttp-green fs-5">Vous n'avez pas encore de gain à afficher !</p>
 		<p>
 			Participer au concours en obtenant un code pour tout achat supérieur à 49€ en magasin ou en
@@ -121,9 +121,11 @@
 	{:else}
 		<div class="d-flex justify-content-center">
 			<div class="text-start">
-				{#each userGains as gain}
-					<p>{gain.ticketCode}: {gain.gainTitle}</p>
-				{/each}
+				{#if userGains}
+					{#each userGains as gain}
+						<p>{gain.ticketCode}: {gain.gainTitle}</p>
+					{/each}
+				{/if}
 			</div>
 		</div>
 	{/if}
