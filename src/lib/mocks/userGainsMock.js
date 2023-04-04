@@ -2,28 +2,16 @@
 
 const userGainsMock = [
     {
-        title: 'title 1 ',
-        imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
+        ticketCode: '1111-1111-1111-1111',
+        gainTitle: 'gain title 1'
     },
     {
-        title: 'title 2',
-        imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
+        ticketCode: '2222-2222-2222-2222',
+        gainTitle: 'gain title 2'
     },
     {
-        title: 'title 3',
-        imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
-    },
-    {
-        title: 'title 4',
-        imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
-    },
-    {
-        title: 'title 5',
-        imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
-    },
-    {
-        title: 'title 6',
-        imageUrl: 'https://dummyimage.com/640x360/ddd/aaa'
+        ticketCode: '3333-3333-3333-3333',
+        gainTitle: 'gain title 2'
     }
 ];
 
