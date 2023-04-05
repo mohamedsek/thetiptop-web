@@ -11,7 +11,7 @@
 
 <svelte:head>
 	<title>Modifier mot de passe</title>
-	<meta name="description" content="updatePassword Page" />
+	<meta name="description" content="DeleteAccount Page" />
 </svelte:head>
 
 <h1 class="text-center fw-bold fs-3 mb-4">Supprimer mon compte</h1>
