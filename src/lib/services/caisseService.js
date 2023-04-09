@@ -26,9 +26,22 @@ const _getCode = async (accessToken, payload) => {
     return [];
 }
 
+const _usedTicket = async (accessToken, ticketCode) => {
+    let usedTicket = await apiClient.post(
+        `${baseUrl}/tickets/usedticket?usedTicketCode=${ticketCode}`,
+        { token: accessToken, payload: ticketCode }
+    );
+    
+    if (usedTicket.error) {
+        return false;
+    }
+    return true;
+}
+
 const caisseService = {
     getUserGains: _getUserGains,
-    getCode: _getCode
+    getCode: _getCode,
+    usedTicket: _usedTicket
 };
 
 export default caisseService;
