@@ -1,6 +1,6 @@
 <script>
-	import { onMount } from 'svelte';
 	import caisseService from '$lib/services/caisseService.js';
+	import Gain from '$lib/components/caisse/Gain.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -15,20 +15,15 @@
 	async function getCode() {
 		ticket = await caisseService.getCode(data.accessToken, {});
 	}
-
-	onMount(() => {
-		console.log('Component mounted');
-	});
 </script>
 
 <div class="container text-center">
 	<div>
 		<button class="btn btn-success" on:click={getCode} type="button">Generer un code</button>
 		{#if ticket}
-		<br>
-		{ticket.code}
+			<br />
+			{ticket.code}
 		{/if}
-
 	</div>
 	<div class="user">
 		<label for="username">Entrer un nom d'utilisateur:</label>
@@ -36,26 +31,20 @@
 		<button class="btn btn-success" on:click={getUserGains} type="button">Chercher</button>
 	</div>
 	{#if userGains}
-		<div class="statstable">
-			<table class="table table-striped .text-bg-success">
-				<thead>
-					<tr>
-						<th scope="col">ticket</th>
-						<th scope="col">gainTitle</th>
-						<th scope="col">Réclamé</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each userGains as gain}
-						<tr>
-							<td>{gain.ticketCode}</td>
-							<td>{gain.gainTitle}</td>
-							<td>{#if gain.isUsed}OUI{:else} En Attente{/if}</td>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
-		</div>
+		<table class="table table-striped .text-bg-success">
+			<thead>
+				<tr>
+					<th scope="col">ticket</th>
+					<th scope="col">gain</th>
+					<th scope="col">Réclamé</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each userGains as gain}
+					<Gain props={data} {gain} refreshUserGains={getUserGains} />
+				{/each}
+			</tbody>
+		</table>
 	{/if}
 </div>
 

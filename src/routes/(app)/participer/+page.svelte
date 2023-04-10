@@ -51,7 +51,10 @@
 
 <svelte:head>
 	<title>ThéTipTop - Participer</title>
-	<meta name="description" content="ThéTipTop - Découvrez nos gammes de thés de très grande qualité, élaborées avec des mélanges signatures exclusifs, des thés détox, des thés blancs, des thés aux légumes et des infusions. Tous nos thés sont bios et Handmades. Savourez une expérience de dégustation unique avec ThéTipTop." />
+	<meta
+		name="description"
+		content="ThéTipTop - Découvrez nos gammes de thés de très grande qualité, élaborées avec des mélanges signatures exclusifs, des thés détox, des thés blancs, des thés aux légumes et des infusions. Tous nos thés sont bios et Handmades. Savourez une expérience de dégustation unique avec ThéTipTop."
+	/>
 </svelte:head>
 
 <div class="d-flex justify-content-center mb-5">
@@ -122,9 +125,27 @@
 		<div class="d-flex justify-content-center">
 			<div class="text-start">
 				{#if userGains}
-					{#each userGains as gain}
-						<p>{gain.ticketCode}: {gain.gainTitle}</p>
-					{/each}
+					<table class="table table-striped .text-bg-success">
+						<thead>
+							<tr>
+								<th scope="col">ticket</th>
+								<th scope="col">gain</th>
+								<th scope="col">Réclamé</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#each userGains as gain}
+								<tr>
+									<td>{gain.ticketCode}</td>
+									<td>{gain.gainTitle}</td>
+									<td
+										>{#if gain.isUsed}OUI{:else} En Attente{/if}</td
+									>
+								</tr>
+								
+							{/each}
+						</tbody>
+					</table>
 				{/if}
 			</div>
 		</div>
