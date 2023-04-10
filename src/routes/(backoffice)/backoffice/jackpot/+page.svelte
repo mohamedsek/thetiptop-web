@@ -1,24 +1,20 @@
 <script>
-	import { onMount } from 'svelte';
+	import backOfficeService from '$lib/services/backOfficeService';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	let Winner = null;
 	let isLoading = false;
-	let JackPot = data.JackPot;
-
+	let Winner = null;
 	async function getWinner() {
 		isLoading = true;
-		console.log(JackPot);
+
+		let WinnerInfo = await backOfficeService.getJackPot(data.accessToken, {});
 		setTimeout(() => {
-			Winner = JackPot;
+			Winner = WinnerInfo;
 			isLoading = false;
 		}, 5000);
 	}
-	onMount(() => {
-		console.log('Component mounted');
-	});
 </script>
 
 <div class="winner">
