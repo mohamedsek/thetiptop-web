@@ -19,8 +19,7 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 40px;
-  background-color: #f9f9f9;
-  font-family: Arial, sans-serif;
+  color: #333;
 }
 
 .about-us h1 {
@@ -34,7 +33,7 @@
 .about-us p {
   font-size: 16px;
   line-height: 1.5;
-  color: #666;
+  color: #333;
   text-align: justify;
 }
 
@@ -47,12 +46,12 @@
 .about-us ul li {
   font-size: 16px;
   line-height: 1.5;
-  color: #666;
+  color: #333;
   margin-bottom: 10px;
 }
 
 .about-us a {
-  color: #333;
+  color: #0077c2;
   text-decoration: none;
   font-weight: bold;
 }

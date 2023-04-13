@@ -51,7 +51,10 @@
 
 <svelte:head>
 	<title>ThéTipTop - Participer</title>
-	<meta name="description" content="ThéTipTop - Découvrez nos gammes de thés de très grande qualité, élaborées avec des mélanges signatures exclusifs, des thés détox, des thés blancs, des thés aux légumes et des infusions. Tous nos thés sont bios et Handmades. Savourez une expérience de dégustation unique avec ThéTipTop." />
+	<meta
+		name="description"
+		content="ThéTipTop - Découvrez nos gammes de thés de très grande qualité, élaborées avec des mélanges signatures exclusifs, des thés détox, des thés blancs, des thés aux légumes et des infusions. Tous nos thés sont bios et Handmades. Savourez une expérience de dégustation unique avec ThéTipTop."
+	/>
 </svelte:head>
 
 <div class="d-flex justify-content-center mb-5">
@@ -111,7 +114,7 @@
 
 <h3 class="ttp-green text-center fs-2 fw-bold">MES GAINS</h3>
 <div class="gains-list border rounded text-center mt-3 pt-3 pb-4">
-	{#if !userGains.length}
+	{#if userGains && !userGains.length}
 		<p class="ttp-green fs-5">Vous n'avez pas encore de gain à afficher !</p>
 		<p>
 			Participer au concours en obtenant un code pour tout achat supérieur à 49€ en magasin ou en
@@ -121,9 +124,29 @@
 	{:else}
 		<div class="d-flex justify-content-center">
 			<div class="text-start">
-				{#each userGains as gain}
-					<p>{gain.ticketCode}: {gain.gainTitle}</p>
-				{/each}
+				{#if userGains}
+					<table class="table table-striped .text-bg-success">
+						<thead>
+							<tr>
+								<th scope="col">ticket</th>
+								<th scope="col">gain</th>
+								<th scope="col">Réclamé</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#each userGains as gain}
+								<tr>
+									<td>{gain.ticketCode}</td>
+									<td>{gain.gainTitle}</td>
+									<td
+										>{#if gain.isUsed}OUI{:else} En Attente{/if}</td
+									>
+								</tr>
+								
+							{/each}
+						</tbody>
+					</table>
+				{/if}
 			</div>
 		</div>
 	{/if}

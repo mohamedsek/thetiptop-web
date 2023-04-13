@@ -1,5 +1,4 @@
 <script>
-	import { onMount } from 'svelte';
 	import backOfficeService from '$lib/services/backOfficeService';
 
 	/** @type {import('./$types').PageData} */
@@ -16,9 +15,6 @@
 			isLoading = false;
 		}, 5000);
 	}
-	onMount(() => {
-		console.log('Component mounted');
-	});
 </script>
 
 <div class="winner">
