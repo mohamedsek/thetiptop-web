@@ -1,7 +1,6 @@
 <script>
-	import mainHomePageImage from '$lib/assets/home/tea_home_page.png';
 	import defaultGainImage from '$lib/assets/home/default_gain_image.png';
-	import enveloppeSvg from '$lib/assets/home/enveloppe.svg';
+	import mainHomePageImage from '$lib/assets/home/tea_home_page.png';
 
 	export let data;
 </script>
